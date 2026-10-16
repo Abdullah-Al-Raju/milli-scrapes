@@ -9,4 +9,5 @@ dist/
 *.mp4
 *.txt
 !llms.txt
+!luxembourg_100_restaurants.txt
 !README.md

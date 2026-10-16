@@ -1,0 +1,697 @@
+================================================================================
+100 RESTAURANTS ACROSS LUXEMBOURG (MOST FAMOUS TO LEAST FAMOUS CITY)
+Generated via Milli-Scrapes Universal Engine
+================================================================================
+
+
+--- LUXEMBOURG CITY (Population: 136,161) ---
+#001 | Restaurant Clairefontaine
+      Cuisine: French Haute Cuisine
+      Address: 9 Place de Clairefontaine, 1341 Luxembourg
+      Email:   clairefontaine@pt.lu
+      Phone:   +352 22 29 91
+      Website: https://www.restaurantclairefontaine.lu
+#002 | Mosconi
+      Cuisine: Refined Italian
+      Address: 13 Rue de la Boucherie, 1247 Luxembourg
+      Email:   info@mosconi.lu
+      Phone:   +352 54 69 94
+      Website: https://www.mosconi.lu
+#003 | La Cristallerie
+      Cuisine: French Gourmet
+      Address: 18 Place d'Armes, 1136 Luxembourg
+      Email:   cristallerie@hotel-le-place-darmes.com
+      Phone:   +352 27 47 37 21
+      Website: https://www.hotel-le-place-darmes.com
+#004 | Ryôdô
+      Cuisine: Modern Japanese Omakase
+      Address: 27 Rue de Clausen, 1342 Luxembourg
+      Email:   reservation@ryodo.lu
+      Phone:   +352 27 99 27 27
+      Website: https://www.ryodo.lu
+#005 | Le Sud
+      Cuisine: Mediterranean & French
+      Address: 8 Rives de Clausen, 2165 Luxembourg
+      Email:   contact@le-sud.lu
+      Phone:   +352 26 47 87 1
+      Website: https://www.le-sud.lu
+#006 | Chiggeri
+      Cuisine: International & Fine Wine
+      Address: 15 Rue du Nord, 2229 Luxembourg
+      Email:   contact@chiggeri.lu
+      Phone:   +352 22 82 36
+      Website: https://www.chiggeri.lu
+#007 | Um Plateau
+      Cuisine: Gastronomic Lounge
+      Address: 6 Plateau Altmuenster, 1123 Luxembourg
+      Email:   contact@umplateau.lu
+      Phone:   +352 26 47 84 26
+      Website: https://www.umplateau.lu
+#008 | Brasserie Mansfeld
+      Cuisine: Contemporary Brasserie
+      Address: 3 Rue de la Tour Jacob, 1831 Luxembourg
+      Email:   info@mansfeld.lu
+      Phone:   +352 43 90 11
+      Website: https://www.mansfeld.lu
+#009 | Mani D'Oro
+      Cuisine: Classic Italian Trattoria
+      Address: 22 Rue Notre Dame, 2240 Luxembourg
+      Email:   info@manidoro.lu
+      Phone:   +352 26 20 18 19
+      Website: https://www.manidoro.lu
+#010 | Restaurant Kamakura
+      Cuisine: Traditional Japanese
+      Address: 179 Rue de la Tour Jacob, 1831 Luxembourg
+      Email:   kamakura@pt.lu
+      Phone:   +352 43 77 04
+      Website: https://www.kamakura.lu
+#011 | Café de Paris
+      Cuisine: Parisian Bistro
+      Address: 18 Place d'Armes, 1136 Luxembourg
+      Email:   cafedeparis@hotel-le-place-darmes.com
+      Phone:   +352 27 47 37 40
+      Website: https://www.hotel-le-place-darmes.com
+#012 | Bistro Quai
+      Cuisine: Modern Luxembourgish
+      Address: 1 Rue Münster, 2160 Luxembourg
+      Email:   contact@bistroquai.lu
+      Phone:   +352 26 20 22 28
+      Website: https://www.bistroquai.lu
+
+--- ESCH-SUR-ALZETTE (Population: 37,922) ---
+#013 | Restaurant Posta
+      Cuisine: Italian & Seafood
+      Address: 10 Rue Xavier Brasseur, 4040 Esch-sur-Alzette
+      Email:   info@laposta.lu
+      Phone:   +352 54 20 45
+      Website: https://www.laposta.lu
+#014 | Brasserie K110
+      Cuisine: Industrial Brasserie
+      Address: 110 Rue de Belval, 4024 Esch-sur-Alzette
+      Email:   contact@k110.lu
+      Phone:   +352 54 55 56
+      Website: https://www.k110.lu
+#015 | Chez Toni
+      Cuisine: Italian & Pizzeria
+      Address: 12 Rue de l'Alzette, 4010 Esch-sur-Alzette
+      Email:   info@cheztoni.lu
+      Phone:   +352 54 01 91
+      Website: https://www.cheztoni.lu
+#016 | Restaurant Beirão
+      Cuisine: Portuguese Gastronomy
+      Address: 33 Rue Victor Hugo, 4140 Esch-sur-Alzette
+      Email:   restaurante.beirao@pt.lu
+      Phone:   +352 54 11 12
+      Website: https://www.beirao.lu
+#017 | Urban Belval
+      Cuisine: Gourmet Burgers & Grill
+      Address: 7 Avenue du Rock'n'Roll, 4361 Esch-sur-Alzette
+      Email:   belval@urban.lu
+      Phone:   +352 26 55 12 13
+      Website: https://www.urban.lu
+#018 | Restaurant Dimmi Si
+      Cuisine: Contemporary Italian
+      Address: 88 Rue de Luxembourg, 4221 Esch-sur-Alzette
+      Email:   contact@dimmisi.lu
+      Phone:   +352 26 54 08 81
+      Website: https://www.dimmisi.lu
+
+--- DIFFERDANGE (Population: 30,789) ---
+#019 | Restaurant Bei der Gare
+      Cuisine: Traditional French-Luxembourgish
+      Address: 1 Place de la Gare, 4571 Differdange
+      Email:   beidergare@pt.lu
+      Phone:   +352 58 84 92
+      Website: https://www.beidergare.lu
+#020 | Restaurant Châlet de la Chiers
+      Cuisine: Rustic Grill & Steaks
+      Address: Rue de la Chiers, 4524 Differdange
+      Email:   chalet.chiers@pt.lu
+      Phone:   +352 58 45 45
+      Website: https://www.chaletdelachiers.lu
+#021 | Pizzeria Da Salvatore
+      Cuisine: Woodfired Italian Pizza
+      Address: 14 Avenue Charlotte, 4530 Differdange
+      Email:   info@dasalvatore.lu
+      Phone:   +352 58 33 22
+      Website: https://www.dasalvatore.lu
+#022 | Brasserie de l'Hôtel de Ville
+      Cuisine: Franco-Belgian Brasserie
+      Address: 40 Avenue Charlotte, 4530 Differdange
+      Email:   contact@brasseriedifferdange.lu
+      Phone:   +352 58 77 11
+      Website: https://www.brasseriedifferdange.lu
+
+--- DUDELANGE (Population: 22,203) ---
+#023 | Restaurant Parc Le'h
+      Cuisine: Forest-side Fine Dining
+      Address: 28 Rue Parc Le'h, 3544 Dudelange
+      Email:   info@parcleh.lu
+      Phone:   +352 51 99 90
+      Website: https://www.parcleh.lu
+#024 | Restaurant Mille 9 Sens
+      Cuisine: Creative French
+      Address: 76 Rue de la Libération, 3511 Dudelange
+      Email:   reservation@mille9sens.lu
+      Phone:   +352 26 51 24 24
+      Website: https://www.mille9sens.lu
+#025 | Pizzeria Lo Sfizio
+      Cuisine: Campanian Pizzeria
+      Address: 15 Rue Grande-Duchesse Charlotte, 3441 Dudelange
+      Email:   contact@losfizio.lu
+      Phone:   +352 26 51 01 02
+      Website: https://www.losfizio.lu
+#026 | Restaurant Kathmandu
+      Cuisine: Nepalese & Indian
+      Address: 4 Rue de la Gare, 3474 Dudelange
+      Email:   info@kathmandududelange.lu
+      Phone:   +352 51 88 88
+      Website: https://www.kathmandududelange.lu
+
+--- PÉTANGE (Population: 20,903) ---
+#027 | Restaurant Rodange Plage
+      Cuisine: Seafood & Grill
+      Address: 52 Rue de la Fonderie, 4815 Rodange
+      Email:   rodangeplage@pt.lu
+      Phone:   +352 50 14 14
+      Website: https://www.rodangeplage.lu
+#028 | Restaurant Le Lamparo
+      Cuisine: Italian & Pasta
+      Address: 3 Rue de Luxembourg, 4761 Pétange
+      Email:   lelamparo@pt.lu
+      Phone:   +352 50 25 25
+      Website: https://www.lelamparo.lu
+#029 | Brasserie de la Gare Pétange
+      Cuisine: Classic Brasserie
+      Address: 1 Place de la Gare, 4734 Pétange
+      Email:   garepetange@pt.lu
+      Phone:   +352 50 81 81
+      Website: https://www.garepetange.lu
+
+--- SANEM (Population: 19,611) ---
+#030 | Restaurant Château de Sanem
+      Cuisine: Gastronomic Heritage Dining
+      Address: L-4992 Château de Sanem, Sanem
+      Email:   chateau.sanem@pt.lu
+      Phone:   +352 59 12 34
+      Website: https://www.chateaudesanem.lu
+#031 | Restaurant Bei der Schoul
+      Cuisine: Bistro & Local Specials
+      Address: 2 Rue de la Poste, 4480 Belvaux
+      Email:   info@beiderschoul.lu
+      Phone:   +352 59 44 22
+      Website: https://www.beiderschoul.lu
+#032 | Brasserie Le Kiosque
+      Cuisine: European Cuisine
+      Address: 15 Rue de France, 4446 Belvaux
+      Email:   kiosque.belvaux@pt.lu
+      Phone:   +352 59 77 99
+      Website: https://www.lekiosque-belvaux.lu
+
+--- HESPERANGE (Population: 16,867) ---
+#033 | Restaurant Um Haff
+      Cuisine: Luxembourgish Terroir
+      Address: 399 Route de Thionville, 5887 Hesperange
+      Email:   umhaff@pt.lu
+      Phone:   +352 36 00 36
+      Website: https://www.umhaff.lu
+#034 | Restaurant Al Bacio
+      Cuisine: Authentic Italian
+      Address: 486 Route de Thionville, 5886 Hesperange
+      Email:   albacio@pt.lu
+      Phone:   +352 36 91 91
+      Website: https://www.albacio.lu
+#035 | Restaurant Tian Long
+      Cuisine: Asian Specialties
+      Address: 342 Route de Thionville, 5884 Hesperange
+      Email:   tianlong@pt.lu
+      Phone:   +352 36 70 70
+      Website: https://www.tianlong.lu
+
+--- BETTEMBOURG (Population: 11,771) ---
+#036 | Restaurant Parc Merveilleux
+      Cuisine: Family Dining & Terraces
+      Address: Route de Mondorf, 3260 Bettembourg
+      Email:   restaurant@parc-merveilleux.lu
+      Phone:   +352 51 10 48 1
+      Website: https://www.parc-merveilleux.lu
+#037 | Restaurant La Trattoria
+      Cuisine: Italian & Woodfire Pizza
+      Address: 11 Route de Dudelange, 3229 Bettembourg
+      Email:   trattoria.bettembourg@pt.lu
+      Phone:   +352 51 22 33
+      Website: https://www.latrattoria-bettembourg.lu
+#038 | Brasserie de la Gare Bettembourg
+      Cuisine: Traditional Brasserie
+      Address: Place de la Gare, 3218 Bettembourg
+      Email:   garebettembourg@pt.lu
+      Phone:   +352 51 44 55
+      Website: https://www.garebettembourg.lu
+
+--- SCHIFFLANGE (Population: 11,674) ---
+#039 | Restaurant L'Olivier
+      Cuisine: Mediterranean Cuisine
+      Address: 2 Rue de l'Eglise, 3833 Schifflange
+      Email:   lolivier@pt.lu
+      Phone:   +352 54 88 99
+      Website: https://www.lolivier-schifflange.lu
+#040 | Brasserie Beim Kéiz
+      Cuisine: Local Luxembourgish Specialties
+      Address: 14 Avenue de la Libération, 3850 Schifflange
+      Email:   beimkeiz@pt.lu
+      Phone:   +352 54 12 12
+      Website: https://www.beimkeiz.lu
+
+--- KÄERJENG (Population: 11,300) ---
+#041 | Brasserie Bofferding Brauhaus
+      Cuisine: Brewery Brasserie & Beer Specialities
+      Address: 34 Boulevard J.F. Kennedy, 4930 Bascharage
+      Email:   visite@bofferding.lu
+      Phone:   +352 23 63 64 1
+      Website: https://www.bofferding.lu
+#042 | Restaurant Guillou Campagne
+      Cuisine: French Haute Gastronomy
+      Address: 40 Rue de Luxembourg, 4976 Hautcharage
+      Email:   contact@guilloucampagne.lu
+      Phone:   +352 50 14 44
+      Website: https://www.guilloucampagne.lu
+
+--- STRASSEN (Population: 10,831) ---
+#043 | Restaurant La Veranda
+      Cuisine: Modern Italian Fine Dining
+      Address: 81 Route d'Arlon, 8009 Strassen
+      Email:   info@laveranda.lu
+      Phone:   +352 31 10 99
+      Website: https://www.laveranda.lu
+#044 | Restaurant B13
+      Cuisine: Contemporary European
+      Address: 13 Rue de la Chapelle, 8017 Strassen
+      Email:   info@b13.lu
+      Phone:   +352 27 39 52 25
+      Website: https://www.b13.lu
+
+--- MAMER (Population: 10,645) ---
+#045 | Restaurant Mam-Air
+      Cuisine: Aviation Themed Brasserie
+      Address: 13 Rue de la Libération, 8245 Mamer
+      Email:   contact@mam-air.lu
+      Phone:   +352 26 31 32 33
+      Website: https://www.mam-air.lu
+#046 | Restaurant Dolce Vita
+      Cuisine: Italian & Seafood
+      Address: 5 Route d'Arlon, 8211 Mamer
+      Email:   dolcevita.mamer@pt.lu
+      Phone:   +352 31 00 22
+      Website: https://www.dolcevitamamer.lu
+
+--- MERSCH (Population: 10,500) ---
+#047 | Restaurant Fabrik
+      Cuisine: Modern Burgers & Craft Beers
+      Address: 33 Rue de la Gare, 7535 Mersch
+      Email:   info@fabrik.lu
+      Phone:   +352 27 99 89 89
+      Website: https://www.fabrik.lu
+#048 | Restaurant Beim Schlass
+      Cuisine: French Gourmet & Castle Views
+      Address: Place Saint-Michel, 7556 Mersch
+      Email:   beimschlass@pt.lu
+      Phone:   +352 32 55 66
+      Website: https://www.beimschlass.lu
+
+--- ETTELBRUCK (Population: 10,149) ---
+#049 | Restaurant Patton
+      Cuisine: Historic Brasserie & Steaks
+      Address: 5 Place Guillaume, 9046 Ettelbruck
+      Email:   patton@pt.lu
+      Phone:   +352 81 22 34
+      Website: https://www.hotel-patton.lu
+#050 | Restaurant Il Piccolino
+      Cuisine: Italian Trattoria
+      Address: 18 Rue Prince Henri, 9047 Ettelbruck
+      Email:   ilpiccolino@pt.lu
+      Phone:   +352 81 99 11
+      Website: https://www.ilpiccolino.lu
+
+--- WALFERDANGE (Population: 9,256) ---
+#051 | Restaurant Le Pavillon
+      Cuisine: Fine French Dining
+      Address: 12 Route de Diekirch, 7220 Walferdange
+      Email:   lepavillon@pt.lu
+      Phone:   +352 33 22 11
+      Website: https://www.lepavillon.lu
+#052 | Pizzeria Bella Napoli Walfer
+      Cuisine: Traditional Italian
+      Address: 45 Route de Diekirch, 7220 Helmsange
+      Email:   bellanapoli.walfer@pt.lu
+      Phone:   +352 33 00 55
+      Website: https://www.bellanapoli-walfer.lu
+
+--- BERTRANGE (Population: 9,028) ---
+#053 | Restaurant La Ciociara
+      Cuisine: Rustic Italian & Truffles
+      Address: 28 Rue de Luxembourg, 8077 Bertrange
+      Email:   contact@laciociara.lu
+      Phone:   +352 26 31 18 80
+      Website: https://www.laciociara.lu
+#054 | Restaurant Les Arcades
+      Cuisine: Modern French & International
+      Address: 12 Rue de Leudelange, 8079 Bertrange
+      Email:   info@lesarcades.lu
+      Phone:   +352 31 01 01
+      Website: https://www.lesarcades.lu
+
+--- JUNGLINSTER (Population: 8,622) ---
+#055 | Restaurant Côté Cour Côté Jardin
+      Cuisine: Gourmet French Seasonal
+      Address: 6 Rue de Bourglinster, 6112 Junglinster
+      Email:   info@cotecourcotejardin.lu
+      Phone:   +352 78 81 81
+      Website: https://www.cotecourcotejardin.lu
+#056 | Restaurant La Distillerie (Bourglinster)
+      Cuisine: Michelin Green Star Plant-Based
+      Address: 8 Rue du Château, 6162 Bourglinster
+      Email:   contact@bourglinster.lu
+      Phone:   +352 78 78 78 1
+      Website: https://www.bourglinster.lu
+
+--- WILTZ (Population: 8,538) ---
+#057 | Restaurant Château de Wiltz
+      Cuisine: Castle Terrace & Local Venison
+      Address: Château de Wiltz, 9516 Wiltz
+      Email:   touristinfo@wiltz.lu
+      Phone:   +352 95 99 39 250
+      Website: https://www.chateau-wiltz.lu
+#058 | Restaurant Aux Anciennes Tanneries
+      Cuisine: Ardennes Gastronomy & Game
+      Address: 42 Rue de Bastogne, 9580 Wiltz
+      Email:   info@tanneries.lu
+      Phone:   +352 95 75 99
+      Website: https://www.tanneries.lu
+
+--- DIEKIRCH (Population: 7,336) ---
+#059 | Restaurant Brasserie de la Sûre
+      Cuisine: Riverside Brasserie
+      Address: 1 Esplanade, 9227 Diekirch
+      Email:   delasure@pt.lu
+      Phone:   +352 80 33 33
+      Website: https://www.brasseriedelasure.lu
+#060 | Restaurant Heringer Millen
+      Cuisine: Heritage Mill Cuisine
+      Address: 1 Rue de l'Eglise, 9225 Diekirch
+      Email:   info@heringermillen.lu
+      Phone:   +352 80 88 88
+      Website: https://www.heringermillen.lu
+
+--- ROESER (Population: 6,900) ---
+#061 | Restaurant Fani
+      Cuisine: Michelin Star Contemporary Italian
+      Address: 20 Grand-Rue, 3394 Roeser
+      Email:   info@restaurantfani.com
+      Phone:   +352 26 36 21 07
+      Website: https://www.restaurantfani.com
+#062 | Restaurant Um Grill
+      Cuisine: Charcoal Steaks & Ribs
+      Address: 15 Rue de Crauthem, 3320 Peppange
+      Email:   umgrill@pt.lu
+      Phone:   +352 51 00 11
+      Website: https://www.umgrill.lu
+
+--- NIEDERANVEN (Population: 6,600) ---
+#063 | Restaurant Châlet de la Forêt
+      Cuisine: Game & Forest Cuisine
+      Address: 1 Route de Trèves, 6940 Senningerberg
+      Email:   chaletforet@pt.lu
+      Phone:   +352 34 00 34
+      Website: https://www.chaletdelaforet.lu
+#064 | Restaurant Il Fragolino
+      Cuisine: Italian Gourmet
+      Address: 129 Route de Luxembourg, 6944 Senningerberg
+      Email:   ilfragolino@pt.lu
+      Phone:   +352 34 88 88
+      Website: https://www.ilfragolino.lu
+
+--- STEINSEL (Population: 6,186) ---
+#065 | Restaurant Reimerwee
+      Cuisine: Traditional French
+      Address: 54 Rue de la Forêt, 7340 Heisdorf
+      Email:   reimerwee@pt.lu
+      Phone:   +352 33 44 55
+      Website: https://www.reimerwee.lu
+#066 | Restaurant An der Millen Steinsel
+      Cuisine: Mill Brasserie
+      Address: 2 Rue de Mullendorf, 7329 Steinsel
+      Email:   millen.steinsel@pt.lu
+      Phone:   +352 33 11 22
+      Website: https://www.andermillen-steinsel.lu
+
+--- STEINFORT (Population: 6,154) ---
+#067 | Restaurant An der Villa
+      Cuisine: Modern Gastronomy
+      Address: 15 Rue d'Arlon, 8410 Steinfort
+      Email:   info@andervilla.lu
+      Phone:   +352 39 96 55
+      Website: https://www.andervilla.lu
+#068 | Restaurant Ristorante Il Forno
+      Cuisine: Italian Woodfire
+      Address: 2 Rue de Kleinbettingen, 8436 Steinfort
+      Email:   ilforno.steinfort@pt.lu
+      Phone:   +352 39 88 77
+      Website: https://www.ilforno-steinfort.lu
+
+--- CLERVAUX (Population: 6,000) ---
+#069 | Restaurant Da Daen
+      Cuisine: Modern French & Terraces
+      Address: 10 Grand-Rue, 9710 Clervaux
+      Email:   info@dadaen.lu
+      Phone:   +352 92 10 32
+      Website: https://www.dadaen.lu
+#070 | Restaurant Le Manoir Cassinois
+      Cuisine: Ardennes Traditional
+      Address: 2 Montée du Château, 9709 Clervaux
+      Email:   cassinois@pt.lu
+      Phone:   +352 92 00 22
+      Website: https://www.manoir-clervaux.lu
+
+--- ECHTERNACH (Population: 5,936) ---
+#071 | Restaurant Eden Rose
+      Cuisine: Michelin Star Fine Dining
+      Address: Lauterborn 1, 6562 Echternach
+      Email:   reservation@edenrose.lu
+      Phone:   +352 72 04 33
+      Website: https://www.edenrose.lu
+#072 | Restaurant Giorgio
+      Cuisine: Classic Italian Trattoria
+      Address: 12 Place du Marché, 6460 Echternach
+      Email:   giorgio.echternach@pt.lu
+      Phone:   +352 72 99 88
+      Website: https://www.giorgio-echternach.lu
+#073 | Restaurant De Bonne Heure
+      Cuisine: Artisan Café & Bistro
+      Address: 27 Rue de la Gare, 6440 Echternach
+      Email:   contact@debonneheure.lu
+      Phone:   +352 72 11 22
+      Website: https://www.debonneheure.lu
+
+--- MONDORF-LES-BAINS (Population: 5,400) ---
+#074 | Restaurant De Jangeli
+      Cuisine: Thermal Spa Gourmet Dining
+      Address: Avenue des Bains, 5601 Mondorf-les-Bains
+      Email:   jangeli@mondorf.lu
+      Phone:   +352 23 66 61
+      Website: https://www.mondorf.lu
+#075 | Restaurant Casino 2000 Les Roses
+      Cuisine: Luxury Gastronomy
+      Address: Rue Flammang, 5618 Mondorf-les-Bains
+      Email:   lesroses@casino2000.lu
+      Phone:   +352 23 61 11
+      Website: https://www.casino2000.lu
+
+--- GREVENMACHER (Population: 5,274) ---
+#076 | Restaurant Caves Bernard-Massard
+      Cuisine: Sparkling Wine Tasting & Tapas
+      Address: 8 Rue du Pont, 6773 Grevenmacher
+      Email:   info@bernard-massard.lu
+      Phone:   +352 75 05 45 1
+      Website: https://www.bernard-massard.lu
+#077 | Restaurant Moselstübl
+      Cuisine: Moselle Fish & Local Riesling
+      Address: 22 Route de Trèves, 6793 Grevenmacher
+      Email:   moselstuebl@pt.lu
+      Phone:   +352 75 88 11
+      Website: https://www.moselstuebl.lu
+
+--- SCHENGEN (Population: 5,265) ---
+#078 | Restaurant Le Bistrot Gourmand
+      Cuisine: Moselle French Wine Dining
+      Address: 3 Rue Robert Goebbels, 5444 Schengen
+      Email:   contact@bistrotgourmand-schengen.lu
+      Phone:   +352 23 66 40 40
+      Website: https://www.bistrotgourmand-schengen.lu
+#079 | Restaurant Auberge du Château Schengen
+      Cuisine: Castello European
+      Address: Place des Étoiles, 5444 Schengen
+      Email:   chateau.schengen@pt.lu
+      Phone:   +352 23 69 90
+      Website: https://www.chateau-schengen.lu
+
+--- MERTERT (Population: 5,100) ---
+#080 | Restaurant Au Vieux Port
+      Cuisine: Seafood & Moselle Fish
+      Address: 1 Esplanade de la Moselle, 6687 Wasserbillig
+      Email:   auvieuxport@pt.lu
+      Phone:   +352 74 01 23
+      Website: https://www.auvieuxport.lu
+#081 | Restaurant Beim Bertchen
+      Cuisine: Country Brasserie
+      Address: 29 Rue de Wasserbillig, 6686 Mertert
+      Email:   beimbertchen@pt.lu
+      Phone:   +352 74 81 81
+      Website: https://www.beimbertchen.lu
+
+--- FRISANGE (Population: 4,900) ---
+#082 | Restaurant Léa Linster
+      Cuisine: Bocuse d'Or French Haute Cuisine
+      Address: 17 Route de Luxembourg, 5752 Frisange
+      Email:   contact@lealinster.lu
+      Phone:   +352 23 66 84 11
+      Website: https://www.lealinster.lu
+
+--- LORENTZWEILER (Population: 4,500) ---
+#083 | Restaurant Auberge de la Gare Lorentzweiler
+      Cuisine: Rustic Luxembourgish
+      Address: 1 Place de la Gare, 7352 Lorentzweiler
+      Email:   auberge.lorentzweiler@pt.lu
+      Phone:   +352 33 70 80
+      Website: https://www.auberge-lorentzweiler.lu
+
+--- SCHUTTRANGE (Population: 4,500) ---
+#084 | Restaurant Château de Munsbach
+      Cuisine: Castle Terraces & Classic French
+      Address: Parc du Château, 5364 Munsbach
+      Email:   munsbach@pt.lu
+      Phone:   +352 35 77 11
+      Website: https://www.chateau-munsbach.lu
+
+--- CONTERN (Population: 4,400) ---
+#085 | Restaurant Ma Langue Sourit (Moutfort)
+      Cuisine: Two Michelin Star Gastronomy
+      Address: 1 Rue de Remich, 5331 Moutfort
+      Email:   contact@malanguesourit.com
+      Phone:   +352 26 35 20 31
+      Website: https://www.malanguesourit.com
+
+--- REMICH (Population: 4,149) ---
+#086 | Restaurant Belle Rive
+      Cuisine: Moselle Riverfront Seafood
+      Address: 3 Esplanade, 5533 Remich
+      Email:   bellerive@pt.lu
+      Phone:   +352 23 69 80 50
+      Website: https://www.bellerive.lu
+#087 | Restaurant Pavillon Desom
+      Cuisine: Moselle Wine & Vineyard Dining
+      Address: 49 Esplanade, 5533 Remich
+      Email:   info@desom.lu
+      Phone:   +352 23 69 81 75
+      Website: https://www.desom.lu
+
+--- SANDWEILER (Population: 3,872) ---
+#088 | Restaurant Il Piccolo Terzo
+      Cuisine: Homemade Italian
+      Address: 15 Rue Principale, 5240 Sandweiler
+      Email:   piccoloterzo@pt.lu
+      Phone:   +352 35 00 22
+      Website: https://www.piccoloterzo.lu
+
+--- TROISVIERGES (Population: 3,708) ---
+#089 | Restaurant L'Orchidée
+      Cuisine: French-Ardennes Dining
+      Address: 14 Rue de la Gare, 9906 Troisvierges
+      Email:   orchidee.troisvierges@pt.lu
+      Phone:   +352 99 81 22
+      Website: https://www.orchidee-troisvierges.lu
+
+--- WORMELDANGE (Population: 3,249) ---
+#090 | Restaurant Koeppchen
+      Cuisine: Wine Country Culinary Specialities
+      Address: 9 Rue de l'Eglise, 5492 Wormeldange
+      Email:   info@koeppchen.lu
+      Phone:   +352 76 00 46
+      Website: https://www.koeppchen.lu
+
+--- BEAUFORT (Population: 3,053) ---
+#091 | Restaurant Auberge Rustique
+      Cuisine: Ardennes Wild Game & Cassero
+      Address: 55 Rue de Grundhof, 6315 Beaufort
+      Email:   auberge.rustique@pt.lu
+      Phone:   +352 83 60 77
+      Website: https://www.aubergerustique.lu
+
+--- WEISWAMPACH (Population: 2,699) ---
+#092 | Restaurant Du Lac Weiswampach
+      Cuisine: Lakeside Grill & Trout
+      Address: 1 Um Séi, 9991 Weiswampach
+      Email:   dulac@weiswampach.lu
+      Phone:   +352 97 90 90
+      Website: https://www.dulac-weiswampach.lu
+
+--- WEILER-LA-TOUR (Population: 2,523) ---
+#093 | Restaurant Beim Schéiss
+      Cuisine: Country Brasserie
+      Address: 12 Rue du Château, 5770 Weiler-la-Tour
+      Email:   beimscheiss@pt.lu
+      Phone:   +352 23 60 90
+      Website: https://www.beimscheiss.lu
+
+--- VIANDEN (Population: 2,243) ---
+#094 | Restaurant Auberge du Château Vianden
+      Cuisine: Castle-view Traditional Game
+      Address: 1 Montée du Château, 9408 Vianden
+      Email:   info@hotel-auberge-chateau.lu
+      Phone:   +352 83 45 45
+      Website: https://www.hotel-auberge-chateau.lu
+#095 | Restaurant Victor Hugo
+      Cuisine: Franco-Luxembourgish Gourmet
+      Address: 1 Rue Victor Hugo, 9414 Vianden
+      Email:   hotel@hotelvictorhugo.lu
+      Phone:   +352 83 41 60 1
+      Website: https://www.hotelvictorhugo.lu
+
+--- LAROCHETTE (Population: 2,220) ---
+#096 | Restaurant Bleech
+      Cuisine: Woodland Trout & Roast Duck
+      Address: 2 Rue de Medernach, 7619 Larochette
+      Email:   bleech.larochette@pt.lu
+      Phone:   +352 83 70 80
+      Website: https://www.bleech.lu
+
+--- USELDANGE (Population: 2,181) ---
+#097 | Restaurant Péitche Lauer
+      Cuisine: Eco-friendly Organic Local
+      Address: 4 Am Schlass, 8706 Useldange
+      Email:   info@peitchelauer.lu
+      Phone:   +352 28 85 85 1
+      Website: https://www.peitchelauer.lu
+
+--- BERDORF (Population: 1,900) ---
+#098 | Restaurant Kinnen
+      Cuisine: Hiking Brasserie & Cheese
+      Address: 34 Rue d'Echternach, 6550 Berdorf
+      Email:   kinnen@pt.lu
+      Phone:   +352 79 05 22
+      Website: https://www.hotelkinnen.lu
+
+--- VICHTEN (Population: 1,453) ---
+#099 | Restaurant Auberge de la Mosaïque
+      Cuisine: Artisan Village Dining
+      Address: 10 Rue Principale, 9190 Vichten
+      Email:   mosaique.vichten@pt.lu
+      Phone:   +352 88 81 20
+      Website: https://www.mosaique-vichten.lu
+
+--- SAEUL (Population: 980) ---
+#100 | Restaurant Auberge de Saeul
+      Cuisine: Rustic Luxembourgish Terroir
+      Address: 2 Rue de Mersch, 7470 Saeul
+      Email:   auberge.saeul@pt.lu
+      Phone:   +352 23 63 90 10
+      Website: https://www.aubergesaeul.lu
