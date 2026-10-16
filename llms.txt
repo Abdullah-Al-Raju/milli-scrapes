@@ -1,41 +1,32 @@
-# Milli-Scrapes: Ultra-Fast Visual Web Scraper & Seat Booking Engine
+# Milli-Scrapes: Ultra-Fast Visual Web Scraper, Crawler & Anti-Bot Engine for AI Agents
 
-> Milli-Scrapes is a high-frequency autonomous web scraping, optical website change detection, and sub-15ms reflex booking engine built for high-demand slot reservation and zero-sleep web automation.
+> Milli-Scrapes is a high-frequency autonomous web scraping, crawling, and anti-bot stealth engine built for LLMs and autonomous AI agents. Powered by direct Chrome DevTools Protocol (CDP) WebSocket execution and transient RAM optical frame processing, it settles dynamic web applications in milliseconds with zero arbitrary sleeps.
 
-## System Summary
-- Purpose: Ultra-fast web scraping, real-time website change monitoring, and sub-15ms reflex seat/slot booking.
-- Engine: In-loop Chrome DevTools Protocol (CDP) over native WebSockets (< 0.05 ms dispatch).
-- Settling: DOM MutationObserver reactive settling (`wait_until_idle`). 0 ms arbitrary sleep.
-- Visual Perception: Continuous 60Hz transient RAM optical differ and color centroid detection. 0 bytes secondary storage writes.
-- Seat Booking Latency: 8.10 ms reaction latency, 21.29 ms total Time To Finish (TTF).
-- Memory Footprint: ~65 MB per headless worker.
-- Output Formats: LLM-ready clean Markdown, structured JSON tables, raw HTML, and in-memory JPEG snapshot proof.
+## Capabilities & Metrics
+- Engine: Direct In-Loop WebSocket Chrome DevTools Protocol (CDP) (< 0.05 ms dispatch).
+- Anti-Bot Stealth: Pre-navigation script injection spoofing `navigator.webdriver`, plugins, languages, and WebGL.
+- Cookie Consent Auto-Dismiss: In-loop detection and dismissal of cookie walls (OneTrust, Didomi, Cookiebot) in sub-15ms.
+- Structured Extraction: Zero-Shot Pydantic model validation, automatic contact discovery (emails, phones), tables, and clean Markdown.
+- Domain Crawling: Streaming XML Sitemap parser and recursive link crawler.
+- Memory Footprint: ~65 MB per headless worker (95.5% lighter than standard consumer automation browsers).
+- Transient RAM Differ: Compares visual state shifts directly in memory at 60 FPS (0 bytes saved to secondary storage).
 
 ## Machine-Readable API
 ```python
-# Direct In-Loop Scraping
-from milli_scrapes.browser.engine import MilliScrapeBrowser
-from milli_scrapes.extractor.markdown import HTMLToMarkdownExtractor
+from milli_scrapes import UniversalScraper
 
-browser = MilliScrapeBrowser(headless=True)
-await browser.start()
-page = await browser.navigate_and_settle("https://example.com")
-markdown = HTMLToMarkdownExtractor().extract(page["html"])
-await browser.aclose()
+scraper = UniversalScraper(headless=True, auto_consent=True)
+result = await scraper.scrape_url("https://example.com", extract_contacts=True)
+print(result["markdown"])
+print(result["contacts"]["emails"])
 ```
 
-```python
-# Reflex Seat Sniping
-from milli_scrapes.sniper.seat_sniper import ReflexSeatSniper
-
-sniper = ReflexSeatSniper(browser=browser)
-result = await sniper.snipe_optical_seat(confirm_selector="#confirm-booking")
-# Returns: {'status': 'booked', 'time_to_finish_ms': 21.29, 'reaction_latency_ms': 8.10, 'target_coords': (415, 215)}
-```
+## MCP Server
+- Command: `python3 -m milli_scrapes.mcp_server`
+- Tools: `milli_scrape_url`, `milli_crawl_sitemap`, `milli_crawl_domain`
 
 ## Repository and Author Metadata
 - GitHub Repository: https://github.com/Abdullah-Al-Raju/milli-scrapes
 - Author: Abdullah-Al-Raju
 - Contact: analystx.raju@gmail.com
 - License: Free for Personal, Educational, and Research Evaluation. Commercial / Industrial usage requires written license permission.
-- Research Fellowship / Scholarship Inquiries: Actively seeking AI agent research positions and academic lab collaborations.

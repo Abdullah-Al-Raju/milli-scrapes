@@ -5,22 +5,38 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "milli-scrapes"
 version = "0.1.0"
-description = "Ultra-Fast Visual Web Scraper, Change Monitor, and Reflex Seat Booking Engine"
+description = "Ultra-Fast Visual Web Scraper, Crawler, and Anti-Bot Stealth Engine for AI Agents"
 readme = "README.md"
 authors = [{ name = "Abdullah-Al-Raju", email = "analystx.raju@gmail.com" }]
 license = { text = "Free for Personal and Academic Evaluation" }
 requires-python = ">=3.10"
+keywords = [
+    "scraper",
+    "web-scraper",
+    "crawler",
+    "mcp",
+    "model-context-protocol",
+    "ai-agents",
+    "llm",
+    "crawl4ai",
+    "firecrawl",
+    "anti-bot",
+    "stealth",
+    "pydantic"
+]
 dependencies = [
     "numpy>=1.20.0",
     "scipy>=1.7.0",
     "pillow>=9.0.0",
     "pydantic>=2.0.0",
     "click>=8.0.0",
+    "beautifulsoup4>=4.11.0",
     "milli-agent>=0.1.0"
 ]
 
 [project.scripts]
 milli-scrape = "milli_scrapes.cli:main"
+milli-scrapes-mcp = "milli_scrapes.mcp_server:main"
 
 [tool.setuptools.packages.find]
 where = ["."]
