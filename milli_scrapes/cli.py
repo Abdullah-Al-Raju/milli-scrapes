@@ -19,6 +19,9 @@ from .notifier.email import EmailNotifier
 from .sniper.seat_sniper import ReflexSeatSniper
 
 
+from .scraper.universal import UniversalScraper
+
+
 @click.group()
 def main():
     """Milli-Scrapes: Ultra-Fast Visual Web Scraper, Change Monitor, and Reflex Seat Booking Engine."""
@@ -28,33 +31,33 @@ def main():
 @main.command("scrape")
 @click.argument("url")
 @click.option("--format", "output_format", type=click.Choice(["markdown", "json", "html"]), default="markdown", help="Output extraction format")
+@click.option("--contacts/--no-contacts", default=True, help="Extract emails, phones, and contacts")
+@click.option("--crawl", "crawl_pages", default=0, type=int, help="Crawl N pages following links on domain")
+@click.option("--schema", default=None, help="JSON string of field:selector mappings, e.g. '{\"title\": \"h1\"}'")
 @click.option("--headless/--no-headless", default=True, help="Run browser headless")
-def scrape(url: str, output_format: str, headless: bool):
-    """Extracts clean Markdown or structured JSON from a target URL."""
+def scrape(url: str, output_format: str, contacts: bool, crawl_pages: int, schema: Optional[str], headless: bool):
+    """Universal scraper: Extracts clean Markdown, structured JSON, contacts, or crawls any URL."""
     async def _run():
-        browser = MilliScrapeBrowser(headless=headless)
-        await browser.start()
+        schema_dict = json.loads(schema) if schema else None
+        scraper = UniversalScraper(headless=headless)
+        await scraper.browser.start()
         try:
-            res = await browser.navigate_and_settle(url)
-            html = res.get("html", "")
-            elapsed = res.get("elapsed_ms", 0)
-
-            click.echo(click.style(f"\n✓ Settled {url} in {elapsed} ms", fg="green", bold=True))
-
-            if output_format == "markdown":
-                extractor = HTMLToMarkdownExtractor()
-                md = extractor.extract(html)
-                click.echo("\n" + "="*70 + "\n" + md + "\n" + "="*70)
-            elif output_format == "json":
-                extractor = StructuredDataExtractor()
-                tables = extractor.extract_tables(html)
-                kvs = extractor.extract_key_values(html)
-                payload = {"url": url, "elapsed_ms": elapsed, "tables": tables, "key_values": kvs}
-                click.echo(json.dumps(payload, indent=2))
+            if crawl_pages > 0:
+                results = await scraper.crawl(start_url=url, max_pages=crawl_pages, extract_schema=schema_dict)
+                click.echo(json.dumps(results, indent=2))
             else:
-                click.echo(html)
+                data = await scraper.scrape_url(url=url, extract_schema=schema_dict, extract_contacts=contacts)
+                if output_format == "markdown":
+                    click.echo(click.style(f"\n✓ Scraped {url} in {data['elapsed_ms']} ms", fg="green", bold=True))
+                    if contacts and data.get("contacts", {}).get("emails"):
+                        click.echo(click.style(f"  • Emails: {', '.join(data['contacts']['emails'])}", fg="cyan"))
+                    click.echo("\n" + "="*70 + "\n" + data["markdown"] + "\n" + "="*70)
+                elif output_format == "json":
+                    click.echo(json.dumps(data, indent=2))
+                else:
+                    click.echo(data.get("markdown", ""))
         finally:
-            await browser.aclose()
+            await scraper.close()
 
     asyncio.run(_run())
 

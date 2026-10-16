@@ -6,3 +6,7 @@ and in-memory optical change detection without disk writes.
 
 __version__ = "0.1.0"
 __author__ = "Abdullah-Al-Raju"
+
+from .scraper.universal import UniversalScraper
+
+__all__ = ["UniversalScraper", "__version__", "__author__"]
