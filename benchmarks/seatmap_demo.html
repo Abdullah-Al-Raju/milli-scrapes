@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Milli-Scrapes Interactive Seat Booking Benchmark</title>
+    <style>
+        body {
+            background-color: #0f172a;
+            color: #f8fafc;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            margin: 0;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        h1 { margin-bottom: 5px; font-size: 24px; }
+        p.subtitle { color: #94a3b8; margin-top: 0; margin-bottom: 25px; }
+        .stage {
+            width: 420px;
+            height: 35px;
+            background: #334155;
+            border-radius: 6px;
+            text-align: center;
+            line-height: 35px;
+            font-weight: bold;
+            margin-bottom: 25px;
+            letter-spacing: 2px;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(8, 45px);
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+        .seat {
+            width: 45px;
+            height: 45px;
+            border-radius: 8px;
+            background-color: #e74c3c; /* Booked red */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 12px;
+            cursor: not-allowed;
+            user-select: none;
+            transition: background 0.05s;
+        }
+        .seat.available {
+            background-color: #2ecc71 !important; /* Green */
+            cursor: pointer;
+            box-shadow: 0 0 12px #2ecc71;
+        }
+        .seat.selected {
+            background-color: #3b82f6 !important; /* Blue */
+            box-shadow: 0 0 15px #3b82f6;
+        }
+        #confirm-booking {
+            background: #10b981;
+            color: #fff;
+            border: none;
+            padding: 12px 30px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+            display: none;
+        }
+        .status-box {
+            margin-top: 20px;
+            padding: 15px;
+            background: #1e293b;
+            border-radius: 8px;
+            width: 400px;
+            text-align: center;
+            border: 1px solid #334155;
+        }
+    </style>
+</head>
+<body>
+    <h1>Milli-Scrapes Real-Time Reflex Seat Booking</h1>
+    <p class="subtitle">High-frequency visual and DOM slot interception benchmark</p>
+
+    <div class="stage">STAGE / SCREEN</div>
+
+    <div class="grid" id="seat-grid"></div>
+
+    <button id="confirm-booking" onclick="confirmOrder()">CONFIRM & BOOK SEAT</button>
+
+    <div class="status-box" id="status-box">
+        <span id="status-text">Status: Waiting for seat cancellation / drop...</span>
+    </div>
+
+    <script>
+        const grid = document.getElementById("seat-grid");
+        const statusText = document.getElementById("status-text");
+        const confirmBtn = document.getElementById("confirm-booking");
+        let availableSeatIndex = -1;
+        let dropTime = 0;
+        let clickedTime = 0;
+
+        // Render 48 seats
+        for (let i = 0; i < 48; i++) {
+            const seat = document.createElement("div");
+            seat.className = "seat";
+            seat.id = "seat-" + i;
+            seat.innerText = (i + 1);
+            grid.appendChild(seat);
+        }
+
+        // Simulate a sudden seat cancellation drop between 0.3s and 0.8s
+        const delay = 300 + Math.random() * 500;
+        setTimeout(() => {
+            availableSeatIndex = Math.floor(Math.random() * 48);
+            const target = document.getElementById("seat-" + availableSeatIndex);
+            target.classList.add("available");
+            target.classList.add("seat-available");
+            dropTime = performance.now();
+            statusText.innerHTML = "<b style='color:#2ecc71'>SEAT " + (availableSeatIndex + 1) + " JUST OPENED!</b>";
+
+            target.onclick = () => {
+                clickedTime = performance.now();
+                const latency = (clickedTime - dropTime).toFixed(2);
+                target.classList.remove("available");
+                target.classList.add("selected");
+                confirmBtn.style.display = "inline-block";
+                statusText.innerHTML = "Seat clicked in <b>" + latency + " ms</b>! Click confirm below.";
+            };
+        }, delay);
+
+        function confirmOrder() {
+            const confirmedTime = performance.now();
+            const totalTtf = (confirmedTime - dropTime).toFixed(2);
+            confirmBtn.style.display = "none";
+            statusText.innerHTML = "<b style='color:#3b82f6'>BOOKING FINALIZED!</b> Total TTF: <b>" + totalTtf + " ms</b>.";
+            window.__BOOKING_SUCCESS__ = true;
+            window.__BOOKING_TTF_MS__ = totalTtf;
+        }
+    </script>
+</body>
+</html>

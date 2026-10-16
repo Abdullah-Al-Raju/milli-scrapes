@@ -1,0 +1,12 @@
+*.pyc
+__pycache__/
+*.egg-info/
+build/
+dist/
+.DS_Store
+*.log
+*.png
+*.mp4
+*.txt
+!llms.txt
+!README.md

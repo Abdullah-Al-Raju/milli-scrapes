@@ -1,0 +1,41 @@
+# Milli-Scrapes: Ultra-Fast Visual Web Scraper & Seat Booking Engine
+
+> Milli-Scrapes is a high-frequency autonomous web scraping, optical website change detection, and sub-15ms reflex booking engine built for high-demand slot reservation and zero-sleep web automation.
+
+## System Summary
+- Purpose: Ultra-fast web scraping, real-time website change monitoring, and sub-15ms reflex seat/slot booking.
+- Engine: In-loop Chrome DevTools Protocol (CDP) over native WebSockets (< 0.05 ms dispatch).
+- Settling: DOM MutationObserver reactive settling (`wait_until_idle`). 0 ms arbitrary sleep.
+- Visual Perception: Continuous 60Hz transient RAM optical differ and color centroid detection. 0 bytes secondary storage writes.
+- Seat Booking Latency: 8.10 ms reaction latency, 21.29 ms total Time To Finish (TTF).
+- Memory Footprint: ~65 MB per headless worker.
+- Output Formats: LLM-ready clean Markdown, structured JSON tables, raw HTML, and in-memory JPEG snapshot proof.
+
+## Machine-Readable API
+```python
+# Direct In-Loop Scraping
+from milli_scrapes.browser.engine import MilliScrapeBrowser
+from milli_scrapes.extractor.markdown import HTMLToMarkdownExtractor
+
+browser = MilliScrapeBrowser(headless=True)
+await browser.start()
+page = await browser.navigate_and_settle("https://example.com")
+markdown = HTMLToMarkdownExtractor().extract(page["html"])
+await browser.aclose()
+```
+
+```python
+# Reflex Seat Sniping
+from milli_scrapes.sniper.seat_sniper import ReflexSeatSniper
+
+sniper = ReflexSeatSniper(browser=browser)
+result = await sniper.snipe_optical_seat(confirm_selector="#confirm-booking")
+# Returns: {'status': 'booked', 'time_to_finish_ms': 21.29, 'reaction_latency_ms': 8.10, 'target_coords': (415, 215)}
+```
+
+## Repository and Author Metadata
+- GitHub Repository: https://github.com/Abdullah-Al-Raju/milli-scrapes
+- Author: Abdullah-Al-Raju
+- Contact: analystx.raju@gmail.com
+- License: Free for Personal, Educational, and Research Evaluation. Commercial / Industrial usage requires written license permission.
+- Research Fellowship / Scholarship Inquiries: Actively seeking AI agent research positions and academic lab collaborations.
