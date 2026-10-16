@@ -13,42 +13,54 @@ from bs4 import BeautifulSoup
 from ..browser.engine import MilliScrapeBrowser
 from ..extractor.markdown import HTMLToMarkdownExtractor
 from ..extractor.structured import StructuredDataExtractor
+from ..extractor.pydantic_extractor import PydanticExtractor
+from ..sniper.consent_sniper import ConsentSniper
+from ..crawler.sitemap import SitemapCrawler
+from pydantic import BaseModel
 
 
 class UniversalScraper:
     """
     General-purpose web scraper:
-    - Scrapes any arbitrary URL or batch of URLs
+    - Scrapes any arbitrary URL or batch of URLs with anti-bot stealth
+    - Validates schemas directly against Pydantic models
+    - Auto-dismisses cookie consent dialogs in sub-15ms
+    - Ingests and crawls full XML sitemaps
     - Extracts unstructured Markdown, tables, links, images, emails, phones, and contacts
-    - Supports declarative schema extraction (CSS selector maps or regex patterns)
-    - Follows pagination and crawls domain links
     - Reactively settles JS/React/SPA pages in milliseconds with zero arbitrary sleeps
     """
 
-    def __init__(self, browser: Optional[MilliScrapeBrowser] = None, headless: bool = True):
+    def __init__(
+        self,
+        browser: Optional[MilliScrapeBrowser] = None,
+        headless: bool = True,
+        auto_consent: bool = True
+    ):
         self.browser = browser or MilliScrapeBrowser(headless=headless)
         self.md_extractor = HTMLToMarkdownExtractor()
         self.struct_extractor = StructuredDataExtractor()
+        self.consent_sniper = ConsentSniper(self.browser)
+        self.auto_consent = auto_consent
         self._owns_browser = browser is None
 
     async def scrape_url(
         self,
         url: str,
         extract_schema: Optional[Dict[str, str]] = None,
+        pydantic_model: Optional[type[BaseModel]] = None,
         extract_contacts: bool = True
     ) -> Dict[str, Any]:
         """
         Scrapes a single URL and extracts structured and unstructured content.
-
-        Args:
-            url: Target URL
-            extract_schema: Optional mapping of field names to CSS selectors or regexes,
-                            e.g. {"name": "h1.title", "price": ".price-tag"}
-            extract_contacts: If True, automatically extracts all emails, phone numbers, and social handles
         """
         res = await self.browser.navigate_and_settle(url)
         html = res.get("html", "")
         elapsed_ms = res.get("elapsed_ms", 0.0)
+
+        # 0. Sub-15ms consent & modal auto-dismissal
+        consent_status = None
+        if self.auto_consent:
+            consent_status = await self.consent_sniper.auto_dismiss_consent()
 
         # 1. Clean Markdown
         markdown = self.md_extractor.extract(html)
@@ -56,6 +68,13 @@ class UniversalScraper:
         # 2. Structured Tables & Key-Values
         tables = self.struct_extractor.extract_tables(html)
         key_values = self.struct_extractor.extract_key_values(html)
+
+        # 3. Pydantic Structured Output Validation
+        pydantic_data = None
+        if pydantic_model and html:
+            pydantic_inst = PydanticExtractor.extract_from_html(html, pydantic_model, css_selectors=extract_schema)
+            if pydantic_inst:
+                pydantic_data = pydantic_inst.model_dump()
 
         # 3. Automatic Contact Discovery (Emails, Phones)
         contacts = {}
@@ -73,6 +92,8 @@ class UniversalScraper:
             "title": res.get("title", ""),
             "elapsed_ms": elapsed_ms,
             "markdown": markdown,
+            "pydantic": pydantic_data,
+            "consent_status": consent_status,
             "contacts": contacts,
             "custom_data": custom_data,
             "tables": tables,
@@ -137,6 +158,33 @@ class UniversalScraper:
                     queue.append(link)
 
         return results
+
+    async def crawl_sitemap(
+        self,
+        base_url_or_sitemap: str,
+        max_urls: int = 50,
+        concurrency: int = 5
+    ) -> List[Dict[str, Any]]:
+        """
+        Discovers and crawls all pages found in a domain's XML sitemap or sitemap URL.
+        """
+        if base_url_or_sitemap.endswith(".xml"):
+            sitemap_urls = [base_url_or_sitemap]
+        else:
+            sitemap_urls = SitemapCrawler.discover_sitemaps_from_robots(base_url_or_sitemap)
+
+        target_urls = []
+        for sm in sitemap_urls:
+            urls = SitemapCrawler.fetch_and_parse(sm)
+            target_urls.extend(urls)
+            if len(target_urls) >= max_urls:
+                break
+
+        queue_urls = list(dict.fromkeys(target_urls))[:max_urls]
+        if not queue_urls:
+            return []
+
+        return await self.scrape_batch(queue_urls, concurrency=concurrency)
 
     def _extract_contacts(self, html: str) -> Dict[str, List[str]]:
         """Extracts valid emails and phone numbers from HTML."""

@@ -9,6 +9,9 @@ import time
 from typing import Dict, Any, Optional, Tuple
 import numpy as np
 
+from .stealth import StealthManager
+from .proxy import ProxyPoolManager
+
 try:
     from milli_agent.browser.engine import MilliBrowserEngine
 except ImportError:
@@ -18,13 +21,22 @@ except ImportError:
 class MilliScrapeBrowser:
     """
     High-frequency browser engine tailored for microsecond scraping,
-    reactive settling, and in-memory frame extraction.
+    anti-bot stealth injection, reactive settling, and in-memory frame extraction.
     """
 
-    def __init__(self, headless: bool = True, port: int = 9222, mock_mode: bool = False):
+    def __init__(
+        self,
+        headless: bool = True,
+        port: int = 9222,
+        mock_mode: bool = False,
+        stealth: bool = True,
+        proxy_manager: Optional[ProxyPoolManager] = None
+    ):
         self.headless = headless
         self.port = port
         self.mock_mode = mock_mode or (MilliBrowserEngine is None)
+        self.stealth = stealth
+        self.proxy_manager = proxy_manager
         self._engine: Optional[Any] = None
         self._mock_html = "<html><body><h1>Milli-Scrapes Test Page</h1><p>Fast scraping in RAM.</p></body></html>"
 
@@ -34,8 +46,15 @@ class MilliScrapeBrowser:
             try:
                 self._engine = MilliBrowserEngine(headless=self.headless, port=self.port)
                 await self._engine.start()
+                if self.stealth:
+                    await self._inject_stealth()
             except Exception:
                 self.mock_mode = True
+
+    async def _inject_stealth(self):
+        """Injects anti-bot stealth overrides into active browser run-loop."""
+        script = StealthManager.get_stealth_script()
+        await self.evaluate(script)
 
     async def aclose(self):
         """Closes browser session."""
@@ -58,6 +77,9 @@ class MilliScrapeBrowser:
                 "title": "Milli-Scrapes Page",
                 "html": self._mock_html
             }
+
+        if self.stealth:
+            await self._inject_stealth()
 
         await self._engine.cy_navigate(url)
         await self._engine.wait_until_idle(timeout=timeout)

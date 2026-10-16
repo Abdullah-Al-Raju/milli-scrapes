@@ -33,16 +33,26 @@ def main():
 @click.option("--format", "output_format", type=click.Choice(["markdown", "json", "html"]), default="markdown", help="Output extraction format")
 @click.option("--contacts/--no-contacts", default=True, help="Extract emails, phones, and contacts")
 @click.option("--crawl", "crawl_pages", default=0, type=int, help="Crawl N pages following links on domain")
+@click.option("--sitemap/--no-sitemap", default=False, help="Discover and scrape URLs via XML sitemap")
+@click.option("--proxy", default=None, help="Proxy URL (http://... or socks5://...)")
+@click.option("--auto-consent/--no-consent", default=True, help="Auto-dismiss cookie banners in sub-15ms")
 @click.option("--schema", default=None, help="JSON string of field:selector mappings, e.g. '{\"title\": \"h1\"}'")
 @click.option("--headless/--no-headless", default=True, help="Run browser headless")
-def scrape(url: str, output_format: str, contacts: bool, crawl_pages: int, schema: Optional[str], headless: bool):
-    """Universal scraper: Extracts clean Markdown, structured JSON, contacts, or crawls any URL."""
+def scrape(url: str, output_format: str, contacts: bool, crawl_pages: int, sitemap: bool, proxy: Optional[str], auto_consent: bool, schema: Optional[str], headless: bool):
+    """Universal scraper: Extracts clean Markdown, structured JSON, contacts, sitemaps, or crawls any URL."""
     async def _run():
         schema_dict = json.loads(schema) if schema else None
-        scraper = UniversalScraper(headless=headless)
+        from .browser.proxy import ProxyPoolManager
+        proxy_mgr = ProxyPoolManager([proxy]) if proxy else None
+        browser = MilliScrapeBrowser(headless=headless, proxy_manager=proxy_mgr)
+        scraper = UniversalScraper(browser=browser, auto_consent=auto_consent)
         await scraper.browser.start()
         try:
-            if crawl_pages > 0:
+            if sitemap:
+                click.echo(click.style(f"🗺 Crawling sitemap for {url}...", fg="cyan"))
+                results = await scraper.crawl_sitemap(url, max_urls=crawl_pages if crawl_pages > 0 else 20)
+                click.echo(json.dumps(results, indent=2))
+            elif crawl_pages > 0:
                 results = await scraper.crawl(start_url=url, max_pages=crawl_pages, extract_schema=schema_dict)
                 click.echo(json.dumps(results, indent=2))
             else:
@@ -51,6 +61,8 @@ def scrape(url: str, output_format: str, contacts: bool, crawl_pages: int, schem
                     click.echo(click.style(f"\n✓ Scraped {url} in {data['elapsed_ms']} ms", fg="green", bold=True))
                     if contacts and data.get("contacts", {}).get("emails"):
                         click.echo(click.style(f"  • Emails: {', '.join(data['contacts']['emails'])}", fg="cyan"))
+                    if data.get("consent_status", {}).get("dismissed"):
+                        click.echo(click.style(f"  • Cookie Consent Auto-Dismissed: {data['consent_status']['selector']}", fg="yellow"))
                     click.echo("\n" + "="*70 + "\n" + data["markdown"] + "\n" + "="*70)
                 elif output_format == "json":
                     click.echo(json.dumps(data, indent=2))

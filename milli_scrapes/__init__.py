@@ -8,5 +8,21 @@ __version__ = "0.1.0"
 __author__ = "Abdullah-Al-Raju"
 
 from .scraper.universal import UniversalScraper
+from .extractor.pydantic_extractor import PydanticExtractor
+from .sniper.consent_sniper import ConsentSniper
+from .crawler.sitemap import SitemapCrawler
+from .browser.proxy import ProxyPoolManager
+from .browser.stealth import StealthManager
+from .optical.scroll_differ import OpticalScrollSettler
 
-__all__ = ["UniversalScraper", "__version__", "__author__"]
+__all__ = [
+    "UniversalScraper",
+    "PydanticExtractor",
+    "ConsentSniper",
+    "SitemapCrawler",
+    "ProxyPoolManager",
+    "StealthManager",
+    "OpticalScrollSettler",
+    "__version__",
+    "__author__"
+]
