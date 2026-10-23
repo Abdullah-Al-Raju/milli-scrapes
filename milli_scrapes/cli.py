@@ -32,46 +32,93 @@ def main():
 @click.argument("url")
 @click.option("--format", "output_format", type=click.Choice(["markdown", "json", "html"]), default="markdown", help="Output extraction format")
 @click.option("--contacts/--no-contacts", default=True, help="Extract emails, phones, and contacts")
-@click.option("--crawl", "crawl_pages", default=0, type=int, help="Crawl N pages following links on domain")
-@click.option("--sitemap/--no-sitemap", default=False, help="Discover and scrape URLs via XML sitemap")
-@click.option("--proxy", default=None, help="Proxy URL (http://... or socks5://...)")
+@click.option("--chunk/--no-chunk", default=False, help="Produce RAG semantic chunks")
+@click.option("--chunk-strategy", type=click.Choice(["heading", "sentence", "sliding"]), default="heading", help="RAG chunking strategy")
+@click.option("--turnstile/--no-turnstile", default=True, help="Auto-solve Cloudflare Turnstile challenges")
 @click.option("--auto-consent/--no-consent", default=True, help="Auto-dismiss cookie banners in sub-15ms")
+@click.option("--proxy", default=None, help="Proxy URL (http://... or socks5://...)")
 @click.option("--schema", default=None, help="JSON string of field:selector mappings, e.g. '{\"title\": \"h1\"}'")
 @click.option("--headless/--no-headless", default=True, help="Run browser headless")
-def scrape(url: str, output_format: str, contacts: bool, crawl_pages: int, sitemap: bool, proxy: Optional[str], auto_consent: bool, schema: Optional[str], headless: bool):
-    """Universal scraper: Extracts clean Markdown, structured JSON, contacts, sitemaps, or crawls any URL."""
+def scrape(url: str, output_format: str, contacts: bool, chunk: bool, chunk_strategy: str, turnstile: bool, auto_consent: bool, proxy: Optional[str], schema: Optional[str], headless: bool):
+    """Universal scraper: Extracts clean Markdown, structured JSON, contacts, tables, and RAG chunks."""
     async def _run():
         schema_dict = json.loads(schema) if schema else None
         from .browser.proxy import ProxyPoolManager
         proxy_mgr = ProxyPoolManager([proxy]) if proxy else None
         browser = MilliScrapeBrowser(headless=headless, proxy_manager=proxy_mgr)
-        scraper = UniversalScraper(browser=browser, auto_consent=auto_consent)
-        await scraper.browser.start()
+        scraper = UniversalScraper(browser=browser, auto_consent=auto_consent, auto_turnstile=turnstile)
         try:
-            if sitemap:
-                click.echo(click.style(f"🗺 Crawling sitemap for {url}...", fg="cyan"))
-                results = await scraper.crawl_sitemap(url, max_urls=crawl_pages if crawl_pages > 0 else 20)
-                click.echo(json.dumps(results, indent=2))
-            elif crawl_pages > 0:
-                results = await scraper.crawl(start_url=url, max_pages=crawl_pages, extract_schema=schema_dict)
-                click.echo(json.dumps(results, indent=2))
+            data = await scraper.scrape_url(
+                url=url,
+                extract_schema=schema_dict,
+                extract_contacts=contacts,
+                chunk=chunk,
+                chunk_strategy=chunk_strategy
+            )
+            if output_format == "markdown":
+                click.echo(click.style(f"\n✓ Scraped {url} in {data['elapsed_ms']} ms [{data.get('engine')}]", fg="green", bold=True))
+                if contacts and data.get("contacts", {}).get("emails"):
+                    click.echo(click.style(f"  • Emails: {', '.join(data['contacts']['emails'])}", fg="cyan"))
+                if data.get("consent_status", {}).get("dismissed"):
+                    click.echo(click.style(f"  • Cookie Consent Auto-Dismissed: {data['consent_status']['selector']}", fg="yellow"))
+                if data.get("turnstile_status", {}).get("solved"):
+                    click.echo(click.style(f"  • Cloudflare Turnstile Solved: {data['turnstile_status']['type']}", fg="magenta"))
+                click.echo("\n" + "="*70 + "\n" + data["markdown"] + "\n" + "="*70)
+                if chunk and data.get("chunks"):
+                    click.echo(click.style(f"\n📦 Generated {len(data['chunks'])} RAG semantic chunks", fg="blue", bold=True))
+            elif output_format == "json":
+                click.echo(json.dumps(data, indent=2))
             else:
-                data = await scraper.scrape_url(url=url, extract_schema=schema_dict, extract_contacts=contacts)
-                if output_format == "markdown":
-                    click.echo(click.style(f"\n✓ Scraped {url} in {data['elapsed_ms']} ms", fg="green", bold=True))
-                    if contacts and data.get("contacts", {}).get("emails"):
-                        click.echo(click.style(f"  • Emails: {', '.join(data['contacts']['emails'])}", fg="cyan"))
-                    if data.get("consent_status", {}).get("dismissed"):
-                        click.echo(click.style(f"  • Cookie Consent Auto-Dismissed: {data['consent_status']['selector']}", fg="yellow"))
-                    click.echo("\n" + "="*70 + "\n" + data["markdown"] + "\n" + "="*70)
-                elif output_format == "json":
-                    click.echo(json.dumps(data, indent=2))
-                else:
-                    click.echo(data.get("markdown", ""))
+                click.echo(data.get("markdown", ""))
         finally:
             await scraper.close()
 
     asyncio.run(_run())
+
+
+@main.command("map")
+@click.argument("base_url")
+@click.option("--limit", default=500, type=int, help="Maximum number of URLs to discover")
+def map_domain(base_url: str, limit: int):
+    """Discovers all internal routes, sitemaps, and URL graphs of a target domain in seconds."""
+    from .crawler.mapper import MilliMapper
+    click.echo(click.style(f"\n🗺 Mapping domain topology for {base_url}...", fg="cyan", bold=True))
+    res = MilliMapper.map_domain(base_url, max_urls=limit)
+    click.echo(click.style(f"✓ Discovered {res['total_urls']} unique URLs in {res['elapsed_ms']} ms", fg="green", bold=True))
+    if res.get("sitemaps"):
+        click.echo(click.style(f"  • Sitemaps: {', '.join(res['sitemaps'])}", fg="yellow"))
+    click.echo("\nRoute clusters:")
+    for path_prefix, count in res.get("paths_summary", {}).items():
+        click.echo(f"  {path_prefix:<25} {count} pages")
+    click.echo(json.dumps(res, indent=2))
+
+
+@main.command("crawl")
+@click.argument("start_url")
+@click.option("--limit", default=20, type=int, help="Maximum pages to crawl")
+@click.option("--depth", default=2, type=int, help="Maximum crawl depth")
+@click.option("--include", multiple=True, help="Path glob patterns to include (e.g. '/docs/*')")
+@click.option("--exclude", multiple=True, help="Path glob patterns to exclude (e.g. '/admin/*')")
+@click.option("--concurrency", default=5, type=int, help="Concurrent worker count")
+def crawl_domain(start_url: str, limit: int, depth: int, include: tuple, exclude: tuple, concurrency: int):
+    """High-concurrency deep crawler with path filtering, depth limits, and Markdown synthesis."""
+    async def _run():
+        scraper = UniversalScraper()
+        click.echo(click.style(f"\n🕷 Crawling {start_url} (limit: {limit}, depth: {depth}, workers: {concurrency})...", fg="cyan", bold=True))
+        results = await scraper.crawl(
+            start_url=start_url,
+            max_pages=limit,
+            max_depth=depth,
+            include_paths=list(include) if include else None,
+            exclude_paths=list(exclude) if exclude else None,
+            concurrency=concurrency,
+            on_page_scraped=lambda p: click.echo(f"  ✓ [{p.get('status', 200)}] {p['url']} ({p.get('elapsed_ms', 0)}ms)")
+        )
+        click.echo(click.style(f"\n✓ Crawled {results['total_crawled']} pages in {results['elapsed_sec']}s ({results['pages_per_second']} p/s)", fg="green", bold=True))
+        await scraper.close()
+
+    asyncio.run(_run())
+
 
 
 @main.command("watch")

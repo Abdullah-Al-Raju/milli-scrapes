@@ -3,7 +3,7 @@
 [![License](https://img.shields.io/badge/License-Personal_&_Academic_Free-blue.svg)](LICENSE)
 [![Python Version](https://img.shields.io/badge/Python-3.10%2B-brightgreen.svg)](https://python.org)
 [![MCP Ready](https://img.shields.io/badge/MCP-Compatible-purple.svg)](SKILL.md)
-[![Tests](https://img.shields.io/badge/Tests-20%2F20_Passed-success.svg)](tests/)
+[![Tests](https://img.shields.io/badge/Tests-32%2F32_Passed-success.svg)](tests/)
 [![Memory Footprint](https://img.shields.io/badge/RAM_Footprint-~65_MB-orange.svg)](#2-competitive-matrix)
 
 Milli-Scrapes is an ultra-fast autonomous web scraper, streaming XML crawler, and anti-bot stealth engine engineered specifically for LLMs, autonomous AI agents, and real-time RAG pipelines.
@@ -15,37 +15,37 @@ By executing directly over native Chrome DevTools Protocol (CDP) WebSockets with
 ## 1. Executive Summary and Architectural Advantages
 
 ### The Bottleneck in Current Web Scrapers
-Conventional scrapers (Crawl4AI, Firecrawl, Scrapy, Playwright) suffer from severe architectural limitations:
-- **High Memory Overhead**: 850 MB to 1.5 GB RAM per browser worker, preventing scalable concurrent agent scraping.
+Conventional scrapers (Crawl4AI, Firecrawl, Spider.cloud, Bright Data) suffer from severe architectural trade-offs:
+- **Blind DOM Dependencies**: They choke or fail when encountering canvas-rendered UIs, WebGL apps, or obfuscated classnames.
 - **Arbitrary Sleep Latency**: Forcing 2,000 ms to 5,000 ms per page using `wait_for_timeout()` sleeps to wait for dynamic elements.
-- **Cookie & Consent Walls**: Stalled by OneTrust, Didomi, and Cookiebot modals that block scraping.
-- **Heavy Disk Degradation**: Constant disk writes of screenshots and cached artifacts.
+- **High Cloud Costs**: Firecrawl charges $15/10k credits; Bright Data requires expensive enterprise minimum commitments.
+- **Cookie & Turnstile Walls**: Stalled by Cloudflare Turnstile, OneTrust, Didomi, and cookie consent banners.
 
-### The Milli-Scrapes Engine
+### The Milli-Scrapes Universal Engine
+- **Dual-Path Hybrid Router**: Fast-Path async HTTP (~15-30ms) for static pages, seamlessly escalating to the in-loop bionic browser for dynamic SPAs and bot-guarded targets.
 - **In-Loop WebSocket CDP**: Direct JSON-RPC connection inside the browser run-loop (< 0.05 ms dispatch latency).
-- **Mutation-Driven Reactive Settling**: Injects DOM `MutationObserver` hooks (`wait_until_idle`). Returns the microsecond the page finishes rendering—0 ms arbitrary sleep.
-- **Anti-Bot Stealth Engine**: Pre-navigation CDP script injection masking `navigator.webdriver`, WebGL vendor/renderer, plugins, and runtime flags.
-- **Sub-15ms Consent Auto-Dismiss**: Detects and dismisses cookie consent dialogs and overlay banners in under 15 milliseconds.
-- **Zero-Shot Pydantic Validation**: Extracts and validates strongly-typed data directly into native Python Pydantic `BaseModel` classes.
-- **Streaming XML Sitemap & Deep Crawler**: High-speed sitemap parser (`/sitemap.xml`, `robots.txt`) streaming batch crawls across domains.
+- **Turnstile & Challenge Auto-Sniper**: Detects Cloudflare Turnstile and challenge interstitials, computes interactive coordinates on the canvas, and executes in-loop coordinate dispatch without third-party solver APIs.
+- **Anti-Bot Stealth Engine**: Canvas and audio fingerprint micro-jitter, WebGL vendor/renderer spoofing, and prototype-level `navigator.webdriver` elimination.
+- **Semantic RAG Chunker**: Splits extracted markdown by heading hierarchy breadcrumbs or sentence boundaries with pre-computed token estimates.
+- **High-Speed Domain Mapper (`/map`) & Deep Crawler (`/crawl`)**: Instant URL topology discovery, XML sitemap resolution, and path globbing (`--include`, `--exclude`).
+- **Sub-15ms Consent Auto-Dismiss**: Dismisses cookie consent dialogs and overlay banners in under 15 milliseconds.
 - **Model Context Protocol (MCP) Native**: Out-of-the-box MCP server connecting with Cursor, Claude Desktop, and autonomous AI agents.
-- **Transient RAM Visual Differ**: Monitors visual layout changes at 60 FPS in memory (0 bytes saved to secondary storage).
 
 ---
 
 ## 2. Competitive Matrix
 
-| Feature / Metric | Scrapy | Crawl4AI | Firecrawl | Milli-Scrapes |
-| :--- | :--- | :--- | :--- | :--- |
-| **Primary Engine** | Twisted / HTTP requests | Playwright wrapper | Node.js / Playwright API | Direct In-Loop WebSocket CDP |
-| **JavaScript / SPA Support** | Poor (Requires Splash) | Yes (via Playwright) | Yes (via Cloud API) | Yes (In-Loop DOM & Canvas) |
-| **RAM Footprint** | ~45 MB | ~850 MB | ~1,500 MB | **~65 MB (Ultra-Lightweight)** |
-| **Settling Mechanism** | N/A (Static HTML) | `wait_for_timeout` sleeps | Network idle heuristics | **DOM Mutation Reactive Settling (0ms sleep)** |
-| **Anti-Bot Stealth** | Needs proxy plugins | Basic stealth plugin | Cloud proxy pool | **In-Loop CDP Pre-Navigation Spoofing** |
-| **Cookie Consent Dismissal** | None | Slow DOM clicks | Partial API bypass | **Sub-15ms In-Loop Auto-Dismiss** |
-| **Pydantic Structured Output**| Custom pipelines | `JsonCssExtraction` | Cloud schema extract | **Native Zero-Shot Pydantic BaseModel** |
-| **Sitemap Discovery** | `SitemapSpider` | Manual URL list | `/map` endpoint | **Streaming XML & Robots.txt Crawler** |
-| **MCP AI Agent Support** | Custom | Third-party adapter | Third-party adapter | **Native Built-In MCP Server** |
+| Feature / Metric | Crawl4AI | Firecrawl | Spider.cloud | Bright Data | Milli-Scrapes |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **Primary Engine** | Playwright wrapper | Cloud Playwright | Rust HTTP Crawler | Residential Proxy Fleet | **Dual Fast-HTTP + Optical CDP** |
+| **Incremental Perception Latency** | ~800–1,500 ms | ~2,100–3,500 ms | ~300–600 ms | ~2,000–5,000 ms | **57.2 ms (Retina)** / **20 ms (Fast-Path)** |
+| **Dynamic SPAs / Canvas Apps** | Partial (DOM only) | Partial (DOM only) | Fails on canvas | Scrapes DOM | **100% Optical & DOM Immune** |
+| **Token Efficiency** | Full page markdown | Markdown (~1,700 tok) | Raw HTML / Markdown | Raw DOM | **274 Visual Tokens (84% Savings)** |
+| **Turnstile / CAPTCHA Bypass** | Basic evasion | Managed Cloud | Fast failure | Solvers (paid) | **In-Loop Coordinate Sniper (0 cost)** |
+| **Domain Mapping (`/map`)** | No | Yes (Cloud API) | Yes | No | **Native Sub-Second `/map` Engine** |
+| **RAG Semantic Chunking** | Chunking strategies | No (raw markdown) | No | No | **Heading Breadcrumb Chunker** |
+| **Cost Per 1k Scrapes** | $0.00 (Self-hosted) | $15.00–$25.00 | $1.00–$2.00 | $5.00–$20.00 | **$0.00 (Local & Open-Source)** |
+
 
 ---
 

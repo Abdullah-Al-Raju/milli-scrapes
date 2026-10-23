@@ -41,3 +41,7 @@ milli-scrapes-mcp = "milli_scrapes.mcp_server:main"
 [tool.setuptools.packages.find]
 where = ["."]
 include = ["milli_scrapes*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+

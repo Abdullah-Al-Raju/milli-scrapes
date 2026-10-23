@@ -8,8 +8,11 @@ class TestStealthAndProxy(unittest.TestCase):
     def test_stealth_script_integrity(self):
         script = StealthManager.get_stealth_script()
         self.assertIn("navigator, 'webdriver'", script)
-        self.assertIn("Intel Inc.", script)
+        self.assertIn("NVIDIA", script)
         self.assertIn("chrome.runtime", script)
+        self.assertIn("Canvas Fingerprint", script)
+        self.assertIn("AudioBuffer", script)
+
 
     def test_proxy_pool_rotation_and_cooldown(self):
         pool = ProxyPoolManager(["http://proxy1:8080", "http://proxy2:8080"])
