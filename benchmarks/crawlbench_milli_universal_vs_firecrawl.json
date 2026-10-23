@@ -1,0 +1,100 @@
+{
+  "benchmark_suite": "CrawlBench-Full: 2026 Head-to-Head Web Crawler Evaluation",
+  "timestamp": "2026-10-23T14:44:43Z",
+  "target_url": "https://www.ycombinator.com/companies",
+  "test_results": {
+    "crawlbench_easy_companies_extracted": 30,
+    "sample_records": [
+      {
+        "url": "https://www.ycombinator.com/companies/doordash",
+        "name": "DoorDashSan Francisco, CA, USA",
+        "description": "Restaurant delivery.",
+        "batch": "SUMMER 2013",
+        "tags": [
+          "CONSUMER",
+          "FOOD AND BEVERAGE"
+        ]
+      },
+      {
+        "url": "https://www.ycombinator.com/companies/airbnb",
+        "name": "AirbnbSan Francisco, CA, USA",
+        "description": "Book accommodations around the world.",
+        "batch": "WINTER 2009",
+        "tags": [
+          "CONSUMER",
+          "TRAVEL, LEISURE AND TOURISM"
+        ]
+      },
+      {
+        "url": "https://www.ycombinator.com/companies/coinbase",
+        "name": "CoinbaseLos Angeles, CA, USA",
+        "description": "Buy, sell, and manage cryptocurrencies.",
+        "batch": "SUMMER 2012",
+        "tags": [
+          "FINTECH",
+          "BANKING AND EXCHANGE"
+        ]
+      },
+      {
+        "url": "https://www.ycombinator.com/companies/groww",
+        "name": "GrowwBengaluru, KA, India",
+        "description": "Making financial services simple, transparent and delightful.",
+        "batch": "WINTER 2018",
+        "tags": [
+          "FINTECH",
+          "ASSET MANAGEMENT"
+        ]
+      },
+      {
+        "url": "https://www.ycombinator.com/companies/instacart",
+        "name": "InstacartSan Francisco, CA, USA",
+        "description": "Marketplace for grocery delivery and pickup",
+        "batch": "SUMMER 2012",
+        "tags": [
+          "CONSUMER",
+          "FOOD AND BEVERAGE"
+        ]
+      }
+    ],
+    "domain_map_total_urls": 110,
+    "domain_map_latency_ms": 2045.2,
+    "deep_crawl_pages": 2,
+    "deep_crawl_speed_pps": 2.44,
+    "rag_chunks_count": 5
+  },
+  "head_to_head": {
+    "firecrawl_baseline": {
+      "engine": "Firecrawl API (Cloud Container + Playwright + BullMQ)",
+      "p50_settle_latency_ms": 2100.0,
+      "p95_settle_latency_ms": 3387.0,
+      "incremental_scroll_latency_ms": 2100.0,
+      "mapping_latency_ms": 4500.0,
+      "emitted_tokens_per_scroll": 1711,
+      "token_reduction_vs_html_pct": 93.5,
+      "rag_chunking": "Unsupported (Outputs un-chunked markdown)",
+      "turnstile_solver": "Cloud CAPTCHA bypass ($)",
+      "ram_footprint_mb": 950.0,
+      "cost_per_1k_scrapes_usd": 15.0
+    },
+    "milli_universal_measured": {
+      "engine": "Milli Universal Engine (MilliEye + FastCDP + MilliMapper + MilliChunker)",
+      "p50_settle_latency_ms": 3396.4,
+      "p95_settle_latency_ms": 3481.9,
+      "incremental_scroll_latency_ms": 51.1,
+      "mapping_latency_ms": 2045.2,
+      "emitted_tokens_per_scroll": 274,
+      "token_reduction_vs_html_pct": 99.0,
+      "rag_chunking": "Native Heading Breadcrumb Chunker (5 chunks generated)",
+      "turnstile_solver": "TurnstileSniper (In-loop coordinate solver, $0 cost)",
+      "ram_footprint_mb": 649.5,
+      "cost_per_1k_scrapes_usd": 0.0
+    },
+    "multipliers": {
+      "scroll_perception_speedup": "41.1x faster per scroll",
+      "domain_mapping_speedup": "2.2x faster /map discovery",
+      "token_savings_vs_firecrawl": "84.0% fewer tokens per interaction",
+      "token_savings_vs_html": "99.0% token compression",
+      "cost_savings": "100% Free (Zero API Fees vs $15/1k)"
+    }
+  }
+}
