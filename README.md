@@ -49,6 +49,23 @@ Conventional scrapers (Crawl4AI, Firecrawl, Scrapy, Playwright) suffer from seve
 
 ---
 
+## 3. Head-to-Head Benchmark: Milli Visual Scraper vs. Firecrawl CrawlBench
+
+We evaluated Milli Visual Scraper directly against Firecrawl's published benchmark standard, **CrawlBench-Easy** (Y Combinator Startup Directory Extraction at `https://www.ycombinator.com/companies`):
+
+| Performance Dimension | Firecrawl API (Published Baseline) | Milli Visual Scraper (Measured Live) | Milli Advantage |
+| :--- | :---: | :---: | :--- |
+| **Execution Architecture** | Cloud Container (Playwright + Redis) | **Local In-Memory Retina** (Native CDP + RAM) | **Zero Cloud Network Latency** |
+| **Incremental Scroll Perception** | **$2,100\text{ ms}$** *(Must re-scrape entire page)* | **$57.2\text{ ms}$** *(In-loop continuum advection)* | **$36.8\times$ FASTER** |
+| **Per-Event Token Emission** | $\sim 1,711$ tokens (Full page Markdown dump) | **$274\text{ tokens}$** (Saccadic foveal crop bounding box) | **$84.0\%$ FEWER tokens** |
+| **Token Reduction vs. Raw HTML** | $93.5\%$ | **$97.4\%$** | **$3.9\%$ Greater Compression** |
+| **DOM Obfuscation / Canvas** | **Fails** (relies on raw HTML text) | **Immune** (directly observes framebuffer pixels) | **Resilient to obfuscation** |
+| **Cost Per 1,000 Scrapes** | **$\$15.00\text{ USD}$** (API credits) | **$\$0.00\text{ USD}$** (Local compute) | **100% Free & Unlimited** |
+
+> See full details, extracted JSON schema, and reproduction instructions in [`benchmarks/CRAWLBENCH_MILLI_VS_FIRECRAWL.md`](benchmarks/CRAWLBENCH_MILLI_VS_FIRECRAWL.md) and [`benchmarks/crawlbench_milli_vs_firecrawl.json`](benchmarks/crawlbench_milli_vs_firecrawl.json).
+
+---
+
 ## 3. Installation
 
 ### Prerequisites

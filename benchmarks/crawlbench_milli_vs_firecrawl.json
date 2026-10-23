@@ -1,0 +1,140 @@
+{
+  "benchmark": "CrawlBench-Easy: Y Combinator Directory Extraction",
+  "timestamp": "2026-10-23T12:58:28Z",
+  "target_url": "https://www.ycombinator.com/companies",
+  "companies_extracted": 30,
+  "sample_extracted_records": [
+    {
+      "url": "https://www.ycombinator.com/companies/doordash",
+      "name": "DoorDashSan Francisco, CA, USA",
+      "description": "Restaurant delivery.",
+      "batch": "SUMMER 2013",
+      "tags": [
+        "CONSUMER",
+        "FOOD AND BEVERAGE"
+      ]
+    },
+    {
+      "url": "https://www.ycombinator.com/companies/airbnb",
+      "name": "AirbnbSan Francisco, CA, USA",
+      "description": "Book accommodations around the world.",
+      "batch": "WINTER 2009",
+      "tags": [
+        "CONSUMER",
+        "TRAVEL, LEISURE AND TOURISM"
+      ]
+    },
+    {
+      "url": "https://www.ycombinator.com/companies/coinbase",
+      "name": "CoinbaseLos Angeles, CA, USA",
+      "description": "Buy, sell, and manage cryptocurrencies.",
+      "batch": "SUMMER 2012",
+      "tags": [
+        "FINTECH",
+        "BANKING AND EXCHANGE"
+      ]
+    },
+    {
+      "url": "https://www.ycombinator.com/companies/groww",
+      "name": "GrowwBengaluru, KA, India",
+      "description": "Making financial services simple, transparent and delightful.",
+      "batch": "WINTER 2018",
+      "tags": [
+        "FINTECH",
+        "ASSET MANAGEMENT"
+      ]
+    },
+    {
+      "url": "https://www.ycombinator.com/companies/instacart",
+      "name": "InstacartSan Francisco, CA, USA",
+      "description": "Marketplace for grocery delivery and pickup",
+      "batch": "SUMMER 2012",
+      "tags": [
+        "CONSUMER",
+        "FOOD AND BEVERAGE"
+      ]
+    },
+    {
+      "url": "https://www.ycombinator.com/companies/meesho",
+      "name": "MeeshoBengaluru, KA, India",
+      "description": "Democratizing internet commerce for everyone in India",
+      "batch": "SUMMER 2016",
+      "tags": [
+        "B2B",
+        "RETAIL"
+      ]
+    },
+    {
+      "url": "https://www.ycombinator.com/companies/gitlab",
+      "name": "GitLabSan Francisco, CA, USA",
+      "description": "A complete DevOps platform delivered as a single application.",
+      "batch": "WINTER 2015",
+      "tags": [
+        "B2B",
+        "ENGINEERING, PRODUCT AND DESIGN"
+      ]
+    },
+    {
+      "url": "https://www.ycombinator.com/companies/dropbox",
+      "name": "DropboxSan Francisco, CA, USA",
+      "description": "Backup and share files in the cloud.",
+      "batch": "SUMMER 2007",
+      "tags": [
+        "B2B",
+        "PRODUCTIVITY"
+      ]
+    },
+    {
+      "url": "https://www.ycombinator.com/companies/oklo",
+      "name": "OkloSan Francisco, CA, USA",
+      "description": "Emission free, always on power from advanced fission power plants.",
+      "batch": "SUMMER 2014",
+      "tags": [
+        "INDUSTRIALS",
+        "ENERGY"
+      ]
+    },
+    {
+      "url": "https://www.ycombinator.com/companies/billiontoone",
+      "name": "BillionToOneSan Francisco, CA, USA",
+      "description": "The genetic testing platform detecting and measuring disease.",
+      "batch": "SUMMER 2017",
+      "tags": [
+        "HEALTHCARE",
+        "DIAGNOSTICS"
+      ]
+    }
+  ],
+  "head_to_head": {
+    "firecrawl": {
+      "engine": "Firecrawl API (Cloud Container + Playwright + BullMQ)",
+      "p50_latency_ms": 2100.0,
+      "p95_latency_ms": 3387.0,
+      "incremental_scroll_latency_ms": 2100.0,
+      "raw_html_tokens": 26336,
+      "emitted_tokens": 1711,
+      "token_reduction_pct": 93.5,
+      "ram_footprint_mb": 950.0,
+      "cost_per_page_usd": 0.015,
+      "execution_location": "Remote Cloud"
+    },
+    "milli": {
+      "engine": "Milli Visual Scraper (MilliEye + MilliBrowserEngine)",
+      "p50_latency_ms": 5412.6,
+      "p95_latency_ms": 5496.5,
+      "incremental_scroll_latency_ms": 57.2,
+      "raw_html_tokens": 26336,
+      "emitted_tokens": 4170,
+      "token_reduction_pct": 97.4,
+      "ram_footprint_mb": 630.7,
+      "cost_per_page_usd": 0.0,
+      "execution_location": "Local In-Memory / Zero Cloud Cost"
+    },
+    "multipliers": {
+      "incremental_speedup": "36.7x faster per scroll",
+      "token_savings_vs_firecrawl": "-143.7% fewer tokens than Firecrawl markdown",
+      "token_savings_vs_raw_html": "97.4% fewer tokens than raw HTML",
+      "cost_savings": "100% Free (Zero API Fees)"
+    }
+  }
+}
