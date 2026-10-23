@@ -11,3 +11,5 @@ dist/
 !llms.txt
 !luxembourg_100_restaurants.txt
 !README.md
+output/
+benchmarks/run_sadie_sink_milli_eye_test.py
