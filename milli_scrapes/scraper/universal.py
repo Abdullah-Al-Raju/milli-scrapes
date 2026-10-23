@@ -27,6 +27,7 @@ from ..sniper.turnstile_sniper import TurnstileSniper
 from ..crawler.sitemap import SitemapCrawler
 from ..crawler.mapper import MilliMapper
 from ..crawler.deep_crawler import MilliCrawler
+from ..decision.engine import MilliDecisionEngine
 
 
 class UniversalScraper:
@@ -48,6 +49,7 @@ class UniversalScraper:
         self.struct_extractor = StructuredDataExtractor()
         self.consent_sniper = ConsentSniper(self.browser)
         self.turnstile_sniper = TurnstileSniper(self.browser)
+        self.decision_engine = MilliDecisionEngine()
         self.auto_consent = auto_consent
         self.auto_turnstile = auto_turnstile
         self._owns_browser = browser is None
@@ -60,7 +62,8 @@ class UniversalScraper:
         extract_contacts: bool = True,
         chunk: bool = False,
         chunk_strategy: str = "heading",
-        force_browser: bool = False
+        force_browser: bool = False,
+        triage: bool = False
     ) -> Dict[str, Any]:
         """
         Scrapes a single URL and extracts structured and unstructured content.
@@ -108,6 +111,11 @@ class UniversalScraper:
         if chunk and markdown:
             chunks = MilliChunker.chunk_markdown(markdown, strategy=chunk_strategy)
 
+        # 7. System 1 Decision Triage (Single-pass classification)
+        triage_data = None
+        if triage and html:
+            triage_data = self.decision_engine.evaluate_triage(html, url)
+
         return {
             "url": url,
             "status": res.get("status", 200),
@@ -124,6 +132,7 @@ class UniversalScraper:
             "custom_data": custom_data,
             "tables": tables,
             "key_values": key_values,
+            "triage": triage_data,
         }
 
     async def scrape_batch(

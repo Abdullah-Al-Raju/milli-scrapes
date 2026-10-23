@@ -14,6 +14,7 @@ from .crawler.sitemap import SitemapCrawler
 from .browser.proxy import ProxyPoolManager
 from .browser.stealth import StealthManager
 from .optical.scroll_differ import OpticalScrollSettler
+from .decision import MilliDecisionEngine, Noul, Choice, Score
 
 __all__ = [
     "UniversalScraper",
@@ -23,6 +24,10 @@ __all__ = [
     "ProxyPoolManager",
     "StealthManager",
     "OpticalScrollSettler",
+    "MilliDecisionEngine",
+    "Noul",
+    "Choice",
+    "Score",
     "__version__",
     "__author__"
 ]
