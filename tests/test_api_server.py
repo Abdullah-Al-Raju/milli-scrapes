@@ -146,3 +146,36 @@ def test_auth_enforcement():
         assert resp_valid.status_code == 200
     finally:
         auth.MASTER_KEY = original_key
+
+
+def test_favicon_endpoint():
+    """Verifies that GET /favicon.ico returns 204 No Content without 404."""
+    resp = client.get("/favicon.ico")
+    assert resp.status_code == 204
+
+
+def test_scrape_with_html_tables(monkeypatch):
+    """Verifies that pages with HTML tables parse into ScrapeResponse without Pydantic ValidationError."""
+    from milli_scrapes.api.routes import scrape as scrape_module
+    scraper = scrape_module.get_scraper()
+
+    async def mock_fetch(url, force_browser=False):
+        return {
+            "html": "<html><body><table><tr><th>Header</th></tr><tr><td>Row 1</td></tr></table></body></html>",
+            "status": 200,
+            "engine": "fast_http",
+            "elapsed_ms": 1.2
+        }
+
+    monkeypatch.setattr(scraper.router, "fetch_page", mock_fetch)
+
+    resp = client.post(
+        "/v1/scrape",
+        json={"url": "https://table-test.com"}
+    )
+    assert resp.status_code == 200
+    data = resp.json()
+    assert data["success"] is True
+    assert len(data["tables"]) > 0
+    assert isinstance(data["tables"], list)
+

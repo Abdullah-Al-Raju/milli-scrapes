@@ -4,7 +4,7 @@ FastAPI Application Factory for Milli Scrapes API Gateway.
 
 import time
 from contextlib import asynccontextmanager
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, Response
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import HTMLResponse
 
@@ -62,6 +62,10 @@ def create_app() -> FastAPI:
     @application.get("/", response_class=HTMLResponse, tags=["Playground"])
     async def serve_playground():
         return HTMLResponse(content=PLAYGROUND_HTML)
+
+    @application.get("/favicon.ico", include_in_schema=False)
+    async def favicon():
+        return Response(status_code=204)
 
     # System health and operational metrics endpoint
     @application.get("/v1/health", tags=["Health"])

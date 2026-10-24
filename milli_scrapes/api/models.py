@@ -37,9 +37,9 @@ class ScrapeResponse(BaseModel):
     elapsed_ms: float = 0.0
     markdown: str = ""
     metadata: Dict[str, Any] = Field(default_factory=dict)
-    chunks: List[Dict[str, Any]] = Field(default_factory=list)
-    contacts: Dict[str, List[str]] = Field(default_factory=dict)
-    tables: List[Dict[str, Any]] = Field(default_factory=list)
+    chunks: List[Any] = Field(default_factory=list)
+    contacts: Dict[str, Any] = Field(default_factory=dict)
+    tables: List[Any] = Field(default_factory=list)
     key_values: Dict[str, Any] = Field(default_factory=dict)
     triage: Optional[Dict[str, Any]] = None
     token_reduction_percent: float = 75.0

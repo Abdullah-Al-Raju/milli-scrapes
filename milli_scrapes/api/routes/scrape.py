@@ -87,6 +87,19 @@ async def scrape_single_url(
             }
         }
 
+    # Format triage data safely if present
+    triage_raw = res.get("triage")
+    triage_formatted = None
+    if isinstance(triage_raw, dict):
+        triage_formatted = {}
+        for k, v in triage_raw.items():
+            if hasattr(v, "model_dump"):
+                triage_formatted[k] = v.model_dump()
+            elif hasattr(v, "dict"):
+                triage_formatted[k] = v.dict()
+            else:
+                triage_formatted[k] = v
+
     # Return native Milli response
     return ScrapeResponse(
         success=res.get("status", 200) < 400,
@@ -101,7 +114,7 @@ async def scrape_single_url(
         contacts=res.get("contacts", {}),
         tables=res.get("tables", []),
         key_values=res.get("key_values", {}),
-        triage=res.get("triage"),
+        triage=triage_formatted,
         token_reduction_percent=round(reduction, 1),
         speedup_vs_firecrawl=f"{round(1850.0 / max(1.0, elapsed_ms), 1)}x"
     )
