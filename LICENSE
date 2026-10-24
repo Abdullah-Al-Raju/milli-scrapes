@@ -1,0 +1,103 @@
+MILLI SOURCE-AVAILABLE DUAL LICENSE (COMMERCIAL & RESEARCH)
+Version 1.0 (2026)
+
+Copyright (c) 2026 Abdullah Al Raju <analystx.raju@gmail.com>
+All rights reserved.
+
+================================================================================
+PREAMBLE
+================================================================================
+
+This software is made available under a dual-licensing model designed to foster
+academic research, personal experimentation, open scientific scrutiny, and
+transparent benchmarking while strictly reserving commercial exploitation,
+production enterprise deployment, and hosted service rights to the author.
+
+================================================================================
+1. DEFINITIONS
+================================================================================
+
+"Licensor" means Abdullah Al Raju.
+
+"Software" means the source code, documentation, mathematical formulations,
+benchmarks, configuration files, test suites, algorithms, and related digital
+materials contained within this repository and its official distributions.
+
+"Non-Commercial Purpose" means any use of the Software strictly for:
+  (a) Personal study, education, and hobbyist experimentation;
+  (b) Academic research, university instruction, and scientific study;
+  (c) Peer review, independent benchmark validation, and public evaluation;
+  where no monetary compensation, commercial revenue, advertising income, or
+  business advantage is directly or indirectly sought, earned, or received.
+
+"Commercial Purpose" means any use of the Software that is not a Non-Commercial
+Purpose, including without limitation:
+  (a) Incorporating, embedding, or bundling the Software into any commercial
+      product, software application, or enterprise workflow;
+  (b) Operating the Software as a hosted service, managed application, cloud
+      scraper, web extraction API, computer-use agent backend, or SaaS;
+  (c) Using the Software internally within any for-profit corporation, company,
+      hedge fund, venture-backed entity, partnership, or commercial enterprise
+      for production data collection, scraping, or automation;
+  (d) Sub-licensing, renting, leasing, selling, or redistributing the Software
+      for commercial consideration.
+
+================================================================================
+2. GRANT OF NON-COMMERCIAL LICENSE
+================================================================================
+
+Subject to the terms and conditions of this License, the Licensor hereby grants
+to each recipient of the Software a perpetual, worldwide, non-exclusive,
+royalty-free license to reproduce, view, compile, execute, test, benchmark,
+and modify the Software solely for Non-Commercial Purposes, provided that:
+
+  (a) The above copyright notice and this complete License document are
+      retained in all copies or substantial portions of the Software;
+  (b) Any published academic paper, benchmark, or public analysis utilizing the
+      Software prominently cites the author and project repository.
+
+================================================================================
+3. RESERVATION OF COMMERCIAL RIGHTS & COMMERCIAL LICENSE REQUIREMENT
+================================================================================
+
+ANY USE OF THE SOFTWARE FOR COMMERCIAL PURPOSES IS EXPRESSLY PROHIBITED
+WITHOUT A SEPARATE WRITTEN COMMERCIAL LICENSE AGREEMENT EXECUTED BY THE LICENSOR.
+
+To inquire about commercial licensing, enterprise self-hosted appliance licenses,
+custom SLAs, partnership opportunities, or intellectual property acquisition,
+please contact:
+
+    Abdullah Al Raju
+    Email: analystx.raju@gmail.com
+
+================================================================================
+4. PATENT & LITIGATION TERMINATION
+================================================================================
+
+If you, your employer, or your affiliate initiates, sponsors, or participates in
+any patent infringement, intellectual property, or legal proceeding against the
+Licensor or any contributor alleging that the Software or any portion thereof
+infringes any patent, copyright, or intellectual property right, all licenses
+and rights granted to you under this License shall terminate immediately and
+automatically without notice.
+
+================================================================================
+5. TRADEMARK RESTRICTION
+================================================================================
+
+This License does not grant permission to use the trade names, trademarks, service
+marks, logos, or product names of the Licensor, including "Milli", "Milli-The-EYE",
+"Milli-Scrapes", "Milli-Agent", or "Milli Engine", except as required for reasonable
+and customary use in describing the origin and scientific citation of the Software.
+
+================================================================================
+6. DISCLAIMER OF WARRANTIES & LIMITATION OF LIABILITY
+================================================================================
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE, TITLE, AND NONINFRINGEMENT. IN NO EVENT SHALL
+THE LICENSOR OR COPYRIGHT HOLDER BE LIABLE FOR ANY CLAIM, DAMAGES, LOSS OF DATA,
+LOSS OF PROFITS, BUSINESS INTERRUPTION, OR OTHER LIABILITY, WHETHER IN AN
+ACTION OF CONTRACT, TORT, OR OTHERWISE, ARISING FROM, OUT OF, OR IN CONNECTION
+WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.

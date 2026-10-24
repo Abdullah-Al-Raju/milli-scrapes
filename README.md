@@ -1,6 +1,6 @@
 # Milli-Scrapes: Ultra-Fast Visual Web Scraper, Crawler, and Anti-Bot Stealth Engine for AI Agents
 
-[![License](https://img.shields.io/badge/License-Personal_&_Academic_Free-blue.svg)](LICENSE)
+[![License](https://img.shields.io/badge/License-Milli_Dual_License_(Research_Free_%7C_Commercial_Paid)-blue.svg)](LICENSE)
 [![Python Version](https://img.shields.io/badge/Python-3.10%2B-brightgreen.svg)](https://python.org)
 [![MCP Ready](https://img.shields.io/badge/MCP-Compatible-purple.svg)](SKILL.md)
 [![Tests](https://img.shields.io/badge/Tests-32%2F32_Passed-success.svg)](tests/)
@@ -197,10 +197,14 @@ Milli-Scrapes is designed as a first-class tool for autonomous AI agents, multi-
 
 ---
 
-## 7. Licensing and Terms of Use
+## 7. Licensing and Commercial Rights
 
-- **Personal, Academic, and Evaluation Use:** Milli-Scrapes is free to use, modify, and inspect for individual developers, students, researchers, and personal projects.
-- **Commercial, Industrial, and Enterprise Use:** Deployment of Milli-Scrapes within commercial platforms, SaaS products, or enterprise systems requires written licensing permission.
+Milli-Scrapes is published under the **Milli Source-Available Dual License (Commercial & Research)**. See the full legal agreement in [`LICENSE`](LICENSE).
+
+- **Research, Academic, and Personal Use (Free):** Perpetual, royalty-free license for personal experimentation, academic research, public benchmark reproduction, university coursework, and non-monetized evaluation.
+- **Commercial and Enterprise Use (Commercial License Required):** Any deployment of Milli-Scrapes within commercial products, hosted web scraping APIs/SaaS, proprietary agent workflows, or revenue-generating enterprise automation requires an active Commercial License Agreement executed with the author.
+- **Commercial Inquiries & Enterprise Appliances:** For licensing terms, private Docker images, custom SLAs, or acquisition inquiries, contact:
+  - **Abdullah Al Raju** — `analystx.raju@gmail.com`
 
 ---
 
