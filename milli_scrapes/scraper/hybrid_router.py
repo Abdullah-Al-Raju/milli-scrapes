@@ -46,6 +46,8 @@ class HybridScrapeRouter:
 
 
         # Fallback to in-loop browser engine
+        if not self.browser._engine and not getattr(self.browser, "mock_mode", False):
+            await self.browser.start()
         browser_res = await self.browser.navigate_and_settle(url)
         browser_res["engine"] = "milli_optical_browser"
         return browser_res
