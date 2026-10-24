@@ -179,7 +179,18 @@ def snipe(url: str, mode: str, confirm_selector: str, seat_selector: str):
         finally:
             await browser.aclose()
 
-    asyncio.run(_run())
+@main.command("serve")
+@click.option("--host", default="0.0.0.0", help="Host interface to bind")
+@click.option("--port", default=8000, type=int, help="Port to listen on")
+@click.option("--reload/--no-reload", default=False, help="Enable auto-reload for development")
+def serve(host: str, port: int, reload: bool):
+    """Launches the Milli Scrapes production API gateway and interactive playground."""
+    from .api.app import run_server
+    click.echo(click.style(f"\n⚡ [Milli Scrapes] Starting API Gateway on http://{host}:{port}", fg="green", bold=True))
+    click.echo(f"  • Live Playground: http://localhost:{port}/")
+    click.echo(f"  • OpenAPI Docs:   http://localhost:{port}/docs")
+    click.echo(f"  • Firecrawl Mode: POST http://localhost:{port}/v1/scrape\n")
+    run_server(host=host, port=port, reload=reload)
 
 
 if __name__ == "__main__":

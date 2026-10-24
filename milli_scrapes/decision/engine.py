@@ -86,10 +86,13 @@ class MilliDecisionEngine:
 
         # 5. General Semantic Intent Matching
         else:
-            words = [w for w in stmt_lower.split() if len(w) > 3]
-            if words:
-                matches = sum(1 for w in words if w in state_lower)
-                prob = min(0.95, (matches / len(words)) * 0.90 + 0.05)
+            stopwords = {"does", "this", "that", "text", "page", "contain", "the", "what", "is", "are", "have", "has", "with", "word", "phrase"}
+            tokens = [w.strip("?,.:;\"'()[]{}") for w in stmt_lower.split()]
+            keywords = [w for w in tokens if len(w) >= 3 and w not in stopwords]
+            target_words = keywords if keywords else [w for w in tokens if len(w) >= 3]
+            if target_words:
+                matches = sum(1 for w in target_words if w in state_lower)
+                prob = min(0.99, (matches / len(target_words)) * 0.90 + 0.05) if matches > 0 else 0.02
 
         elapsed_ms = (time.perf_counter() - t0) * 1000.0
         val = prob >= threshold
@@ -217,7 +220,7 @@ class MilliDecisionEngine:
         is_blocked = self.decide_noul(html, "is_blocked_by_cloudflare_or_captcha")
         is_paywall = self.decide_noul(html, "is_paywall_or_subscription_gate")
         has_pagination = self.decide_noul(html, "has_pagination_or_next_page")
-        layout = self.decide_choice(html, ["ARTICLE", "PRODUCT_CATALOG", "FORUM", "DOCUMENTATION", "GENERIC_PAGE"])
+        layout = self.decide_choice(html, ["CAPTCHA_GATE", "PAYWALL", "ARTICLE", "PRODUCT_CATALOG", "FORUM", "DOCUMENTATION", "GENERIC_PAGE"])
         density = self.decide_score(html, "information_density")
 
         total_elapsed_ms = (time.perf_counter() - t0) * 1000.0

@@ -1,0 +1,33 @@
+# Milli Scrapes High-Performance API Gateway Dockerfile
+FROM python:3.11-slim
+
+# Install system dependencies & Chromium for optical browser fallback
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    chromium \
+    chromium-driver \
+    curl \
+    git \
+    && rm -rf /var/lib/apt/lists/*
+
+ENV CHROME_BIN=/usr/bin/chromium \
+    PYTHONUNBUFFERED=1 \
+    PORT=8000
+
+WORKDIR /app
+
+# Copy dependency requirements & package files
+COPY pyproject.toml /app/
+RUN pip install --no-cache-dir uvicorn fastapi httpx pydantic beautifulsoup4 click pillow numpy scipy
+
+# Copy source tree and install milli-scrapes
+COPY . /app/
+RUN pip install --no-cache-dir -e .
+
+EXPOSE 8000
+
+# Healthcheck
+HEALTHCHECK --interval=30s --timeout=5s --start-period=5s --retries=3 \
+  CMD curl -f http://localhost:8000/v1/health || exit 1
+
+# Launch Uvicorn ASGI server
+CMD ["python3", "-m", "uvicorn", "milli_scrapes.api.app:app", "--host", "0.0.0.0", "--port", "8000"]
