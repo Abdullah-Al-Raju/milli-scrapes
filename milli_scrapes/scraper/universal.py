@@ -123,6 +123,7 @@ class UniversalScraper:
             "title": res.get("title") or metadata.get("title", ""),
             "engine": engine_used,
             "elapsed_ms": elapsed_ms,
+            "html": html,
             "markdown": markdown,
             "metadata": metadata,
             "chunks": chunks,
