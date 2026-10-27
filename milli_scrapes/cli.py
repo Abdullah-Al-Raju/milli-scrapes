@@ -21,6 +21,12 @@ from .sniper.seat_sniper import ReflexSeatSniper
 
 from .scraper.universal import UniversalScraper
 
+if sys.platform == "win32":
+    try:
+        asyncio.set_event_loop_policy(asyncio.WindowsProactorEventLoopPolicy())
+    except Exception:
+        pass
+
 
 @click.group()
 def main():
