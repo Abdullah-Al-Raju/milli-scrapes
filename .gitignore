@@ -8,6 +8,7 @@ dist/
 *.png
 *.mp4
 *.txt
+!requirements.txt
 !llms.txt
 !luxembourg_100_restaurants.txt
 !README.md
