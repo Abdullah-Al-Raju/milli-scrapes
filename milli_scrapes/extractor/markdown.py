@@ -26,13 +26,31 @@ class HTMLToMarkdownExtractor:
         r"<!--[\s\S]*?-->"
     ]
 
-
     # Boilerplate patterns (cookie notices, banners, modals, tracking overlays)
     CLUTTER_PATTERNS = [
         r'<div\b[^>]*(?:cookie|consent|banner|onetrust|gdpr|advertisement|ad-container)[^>]*>[\s\S]*?<\/div>',
         r'<section\b[^>]*(?:cookie|consent|banner|advertisement)[^>]*>[\s\S]*?<\/section>',
         r'<aside\b[^>]*>[\s\S]*?<\/aside>'
     ]
+
+    # Pre-compiled high-throughput regex engine
+    _COMPILED_DISCARD = [re.compile(p, re.IGNORECASE) for p in DISCARD_TAGS]
+    _COMPILED_CLUTTER = [re.compile(p, re.IGNORECASE) for p in CLUTTER_PATTERNS]
+    _RE_NAV = re.compile(r"<nav\b[^>]*>[\s\S]*?<\/nav>", re.IGNORECASE)
+    _RE_FOOTER = re.compile(r"<footer\b[^>]*>[\s\S]*?<\/footer>", re.IGNORECASE)
+    _RE_TABLE = re.compile(r"<table\b[^>]*>[\s\S]*?<\/table>", re.IGNORECASE)
+    _RE_HEADINGS = [(re.compile(rf"<h{i}\b[^>]*>(.*?)<\/h{i}>", re.IGNORECASE | re.DOTALL), f"\n\n{'#' * i} \\1\n\n") for i in range(6, 0, -1)]
+    _RE_STRONG = re.compile(r"<(strong|b)\b[^>]*>(.*?)<\/\1>", re.IGNORECASE | re.DOTALL)
+    _RE_EM = re.compile(r"<(em|i)\b[^>]*>(.*?)<\/\1>", re.IGNORECASE | re.DOTALL)
+    _RE_PRE_CODE = re.compile(r"<pre\b[^>]*><code\b[^>]*>(.*?)<\/code><\/pre>", re.IGNORECASE | re.DOTALL)
+    _RE_CODE = re.compile(r"<code\b[^>]*>(.*?)<\/code>", re.IGNORECASE | re.DOTALL)
+    _RE_A = re.compile(r"<a\b([^>]*)>(.*?)<\/a>", re.IGNORECASE | re.DOTALL)
+    _RE_HREF = re.compile(r'href=["\']([^"\']+)["\']', re.IGNORECASE)
+    _RE_LI = re.compile(r"<li\b[^>]*>(.*?)<\/li>", re.IGNORECASE | re.DOTALL)
+    _RE_BR = re.compile(r"<br\s*\/?>", re.IGNORECASE)
+    _RE_P = re.compile(r"<p\b[^>]*>(.*?)<\/p>", re.IGNORECASE | re.DOTALL)
+    _RE_DIV = re.compile(r"<div\b[^>]*>(.*?)<\/div>", re.IGNORECASE | re.DOTALL)
+    _RE_STRIP_TAGS = re.compile(r"<[^>]+>")
 
     def __init__(self, strip_nav_footer: bool = True, strip_clutter: bool = True):
         self.strip_nav_footer = strip_nav_footer
@@ -54,56 +72,54 @@ class HTMLToMarkdownExtractor:
         text = html
 
         # Strip unneeded blocks
-        for pat in self.DISCARD_TAGS:
-            text = re.sub(pat, "", text, flags=re.IGNORECASE)
+        for pat in self._COMPILED_DISCARD:
+            text = pat.sub("", text)
 
         if self.strip_clutter:
-            for pat in self.CLUTTER_PATTERNS:
-                text = re.sub(pat, "", text, flags=re.IGNORECASE)
+            for pat in self._COMPILED_CLUTTER:
+                text = pat.sub("", text)
 
         if self.strip_nav_footer:
-            text = re.sub(r"<nav\b[^>]*>[\s\S]*?<\/nav>", "", text, flags=re.IGNORECASE)
-            text = re.sub(r"<footer\b[^>]*>[\s\S]*?<\/footer>", "", text, flags=re.IGNORECASE)
+            text = self._RE_NAV.sub("", text)
+            text = self._RE_FOOTER.sub("", text)
 
         # 1. Convert HTML Tables to GitHub-Flavored Markdown Tables
-        text = re.sub(r"<table\b[^>]*>[\s\S]*?<\/table>", self._table_to_markdown, text, flags=re.IGNORECASE)
+        text = self._RE_TABLE.sub(self._table_to_markdown, text)
 
         # 2. Headings
-        for i in range(6, 0, -1):
-            h_pat = rf"<h{i}\b[^>]*>(.*?)<\/h{i}>"
-            prefix = "#" * i + " "
-            text = re.sub(h_pat, rf"\n\n{prefix}\1\n\n", text, flags=re.IGNORECASE | re.DOTALL)
+        for h_re, repl in self._RE_HEADINGS:
+            text = h_re.sub(repl, text)
 
         # 3. Bold & Italic
-        text = re.sub(r"<(strong|b)\b[^>]*>(.*?)<\/\1>", r"**\2**", text, flags=re.IGNORECASE | re.DOTALL)
-        text = re.sub(r"<(em|i)\b[^>]*>(.*?)<\/\1>", r"*\2*", text, flags=re.IGNORECASE | re.DOTALL)
+        text = self._RE_STRONG.sub(r"**\2**", text)
+        text = self._RE_EM.sub(r"*\2*", text)
 
         # 4. Code blocks and inline code
-        text = re.sub(r"<pre\b[^>]*><code\b[^>]*>(.*?)<\/code><\/pre>", r"\n```\n\1\n```\n", text, flags=re.IGNORECASE | re.DOTALL)
-        text = re.sub(r"<code\b[^>]*>(.*?)<\/code>", r"`\1`", text, flags=re.IGNORECASE | re.DOTALL)
+        text = self._RE_PRE_CODE.sub(r"\n```\n\1\n```\n", text)
+        text = self._RE_CODE.sub(r"`\1`", text)
 
         # 5. Links
         def _link_sub(match):
             attrs = match.group(1)
             inner = match.group(2).strip()
-            href_m = re.search(r'href=["\']([^"\']+)["\']', attrs, flags=re.IGNORECASE)
+            href_m = self._RE_HREF.search(attrs)
             if href_m and inner and not inner.startswith("<img"):
                 href = href_m.group(1)
                 return f"[{inner}]({href})"
             return inner
 
-        text = re.sub(r"<a\b([^>]*)>(.*?)<\/a>", _link_sub, text, flags=re.IGNORECASE | re.DOTALL)
+        text = self._RE_A.sub(_link_sub, text)
 
         # 6. List items
-        text = re.sub(r"<li\b[^>]*>(.*?)<\/li>", r"\n* \1", text, flags=re.IGNORECASE | re.DOTALL)
+        text = self._RE_LI.sub(r"\n* \1", text)
 
         # 7. Paragraphs and line breaks
-        text = re.sub(r"<br\s*\/?>", "\n", text, flags=re.IGNORECASE)
-        text = re.sub(r"<p\b[^>]*>(.*?)<\/p>", r"\n\n\1\n\n", text, flags=re.IGNORECASE | re.DOTALL)
-        text = re.sub(r"<div\b[^>]*>(.*?)<\/div>", r"\n\1\n", text, flags=re.IGNORECASE | re.DOTALL)
+        text = self._RE_BR.sub("\n", text)
+        text = self._RE_P.sub(r"\n\n\1\n\n", text)
+        text = self._RE_DIV.sub(r"\n\1\n", text)
 
         # 8. Strip all remaining tags
-        text = re.sub(r"<[^>]+>", "", text)
+        text = self._RE_STRIP_TAGS.sub("", text)
 
         # 9. Decode HTML entities
         text = unescape(text)
@@ -123,10 +139,19 @@ class HTMLToMarkdownExtractor:
 
         return "\n".join(cleaned_lines).strip(), metadata
 
+    _RE_TR = re.compile(r"<tr\b[^>]*>(.*?)<\/tr>", re.IGNORECASE | re.DOTALL)
+    _RE_TH = re.compile(r"<th\b[^>]*>(.*?)<\/th>", re.IGNORECASE | re.DOTALL)
+    _RE_TDH = re.compile(r"<t[dh]\b[^>]*>(.*?)<\/t[dh]>", re.IGNORECASE | re.DOTALL)
+    _RE_TITLE = re.compile(r"<title\b[^>]*>(.*?)<\/title>", re.IGNORECASE | re.DOTALL)
+    _RE_META = re.compile(r"<meta\b([^>]+)>", re.IGNORECASE)
+    _RE_PROP = re.compile(r'(?:name|property)=["\']([^"\']+)["\']', re.IGNORECASE)
+    _RE_CONTENT = re.compile(r'content=["\']([^"\']*)["\']', re.IGNORECASE)
+    _RE_CANONICAL = re.compile(r'<link\b[^>]*rel=["\']canonical["\'][^>]*href=["\']([^"\']+)["\']', re.IGNORECASE)
+
     def _table_to_markdown(self, match: re.Match) -> str:
         """Converts an HTML <table> into a GitHub-Flavored Markdown table."""
         tbl_html = match.group(0)
-        rows = re.findall(r"<tr\b[^>]*>(.*?)<\/tr>", tbl_html, flags=re.IGNORECASE | re.DOTALL)
+        rows = self._RE_TR.findall(tbl_html)
         if not rows:
             return ""
 
@@ -134,7 +159,7 @@ class HTMLToMarkdownExtractor:
         headers: List[str] = []
 
         # Check first row for th headers
-        first_th = re.findall(r"<th\b[^>]*>(.*?)<\/th>", rows[0], flags=re.IGNORECASE | re.DOTALL)
+        first_th = self._RE_TH.findall(rows[0])
         if first_th:
             headers = [self._clean_cell(th) for th in first_th]
             md_rows.append("| " + " | ".join(headers) + " |")
@@ -142,7 +167,7 @@ class HTMLToMarkdownExtractor:
             rows = rows[1:]
 
         for r in rows:
-            cells = re.findall(r"<t[dh]\b[^>]*>(.*?)<\/t[dh]>", r, flags=re.IGNORECASE | re.DOTALL)
+            cells = self._RE_TDH.findall(r)
             clean_cells = [self._clean_cell(c).replace("|", "\\|") for c in cells]
             if clean_cells:
                 if not headers:
@@ -162,7 +187,7 @@ class HTMLToMarkdownExtractor:
 
     def _clean_cell(self, cell_html: str) -> str:
         """Cleans and extracts inner text from a table cell."""
-        text = re.sub(r"<[^>]+>", "", cell_html)
+        text = self._RE_STRIP_TAGS.sub("", cell_html)
         return unescape(text).strip()
 
     def _extract_metadata(self, html: str) -> Dict[str, Any]:
@@ -170,15 +195,15 @@ class HTMLToMarkdownExtractor:
         meta: Dict[str, Any] = {}
 
         # Title
-        title_m = re.search(r"<title\b[^>]*>(.*?)<\/title>", html, flags=re.IGNORECASE | re.DOTALL)
+        title_m = self._RE_TITLE.search(html)
         if title_m:
             meta["title"] = unescape(title_m.group(1).strip())
 
         # Meta tags
-        meta_tags = re.findall(r"<meta\b([^>]+)>", html, flags=re.IGNORECASE)
+        meta_tags = self._RE_META.findall(html)
         for tag in meta_tags:
-            prop_m = re.search(r'(?:name|property)=["\']([^"\']+)["\']', tag, flags=re.IGNORECASE)
-            content_m = re.search(r'content=["\']([^"\']*)["\']', tag, flags=re.IGNORECASE)
+            prop_m = self._RE_PROP.search(tag)
+            content_m = self._RE_CONTENT.search(tag)
             if prop_m and content_m:
                 key = prop_m.group(1).strip().lower()
                 val = unescape(content_m.group(1).strip())
@@ -192,7 +217,7 @@ class HTMLToMarkdownExtractor:
                     meta["author"] = val
 
         # Canonical URL
-        canon_m = re.search(r'<link\b[^>]*rel=["\']canonical["\'][^>]*href=["\']([^"\']+)["\']', html, flags=re.IGNORECASE)
+        canon_m = self._RE_CANONICAL.search(html)
         if canon_m:
             meta["canonical"] = canon_m.group(1).strip()
 

@@ -57,11 +57,14 @@ def scrape(url: str, output_format: str, contacts: bool, chunk: bool, chunk_stra
             )
             if output_format == "markdown":
                 click.echo(click.style(f"\n✓ Scraped {url} in {data['elapsed_ms']} ms [{data.get('engine')}]", fg="green", bold=True))
-                if contacts and data.get("contacts", {}).get("emails"):
+                if contacts and (data.get("contacts") or {}).get("emails"):
                     click.echo(click.style(f"  • Emails: {', '.join(data['contacts']['emails'])}", fg="cyan"))
-                if data.get("consent_status", {}).get("dismissed"):
+                if contacts and (data.get("contacts") or {}).get("social_media"):
+                    for plat, link in data["contacts"]["social_media"].items():
+                        click.echo(click.style(f"  • {plat.replace('_', ' ').title()}: {link}", fg="blue"))
+                if (data.get("consent_status") or {}).get("dismissed"):
                     click.echo(click.style(f"  • Cookie Consent Auto-Dismissed: {data['consent_status']['selector']}", fg="yellow"))
-                if data.get("turnstile_status", {}).get("solved"):
+                if (data.get("turnstile_status") or {}).get("solved"):
                     click.echo(click.style(f"  • Cloudflare Turnstile Solved: {data['turnstile_status']['type']}", fg="magenta"))
                 click.echo("\n" + "="*70 + "\n" + data["markdown"] + "\n" + "="*70)
                 if chunk and data.get("chunks"):
@@ -149,7 +152,7 @@ def watch(url: str, interval: float, email: str, optical: bool, cycles: int):
 
 @main.command("snipe")
 @click.argument("url")
-@click.option("--mode", type=click.Choice(["optical", "dom"]), default="optical", help="Sniping mode: visual canvas or in-loop DOM")
+@click.option("--mode", type=click.Choice(["optical", "dom", "hyper"]), default="optical", help="Sniping mode: visual optical canvas, in-loop DOM, or sub-ms V8 hyper reflex")
 @click.option("--confirm", "confirm_selector", default="#confirm-booking", help="Checkout or confirmation selector")
 @click.option("--seat", "seat_selector", default=".seat-available", help="DOM selector for candidate seat")
 def snipe(url: str, mode: str, confirm_selector: str, seat_selector: str):
@@ -165,6 +168,8 @@ def snipe(url: str, mode: str, confirm_selector: str, seat_selector: str):
 
             if mode == "optical":
                 res = await sniper.snipe_optical_seat(confirm_selector=confirm_selector)
+            elif mode == "hyper":
+                res = await sniper.snipe_v8_hyper_seat(seat_selector=seat_selector, confirm_selector=confirm_selector)
             else:
                 res = await sniper.snipe_dom_seat(seat_selector=seat_selector, confirm_selector=confirm_selector)
 

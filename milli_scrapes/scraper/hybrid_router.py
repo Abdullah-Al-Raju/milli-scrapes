@@ -11,6 +11,20 @@ import asyncio
 import urllib.request
 from typing import Dict, Any, Optional
 from urllib.parse import urlparse
+try:
+    import urllib3
+    # High-concurrency persistent HTTP connection pool with keep-alive reuse
+    _HTTP_POOL = urllib3.PoolManager(
+        maxsize=50,
+        headers={
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
+            "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
+            "Accept-Language": "en-US,en;q=0.9",
+            "Connection": "keep-alive"
+        }
+    )
+except Exception:
+    _HTTP_POOL = None
 
 from ..extractor.markdown import HTMLToMarkdownExtractor
 from ..browser.engine import MilliScrapeBrowser
@@ -63,6 +77,12 @@ class HybridScrapeRouter:
         loop = asyncio.get_running_loop()
 
         def _sync_fetch():
+            if _HTTP_POOL is not None:
+                try:
+                    r = _HTTP_POOL.request("GET", url, timeout=timeout, redirect=True)
+                    return r.status, r.data.decode("utf-8", errors="ignore")
+                except Exception:
+                    pass
             req = urllib.request.Request(url, headers=headers)
             with urllib.request.urlopen(req, timeout=timeout) as resp:
                 status = resp.status

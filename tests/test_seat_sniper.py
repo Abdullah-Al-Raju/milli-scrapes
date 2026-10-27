@@ -24,6 +24,20 @@ class TestSeatSniper(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(res["mode"], "dom_in_loop")
         self.assertGreater(res["time_to_finish_ms"], 0.0)
 
+    async def test_v8_hyper_seat_sniping(self):
+        browser = MilliScrapeBrowser(mock_mode=True)
+        sniper = ReflexSeatSniper(browser=browser, dry_run=True)
+
+        res = await sniper.snipe_v8_hyper_seat(
+            seat_selector="#seat-a1",
+            confirm_selector="#confirm-btn"
+        )
+
+        self.assertEqual(res["status"], "booked")
+        self.assertEqual(res["mode"], "v8_hyper_reflex_mock")
+        self.assertLess(res["reaction_latency_ms"], 1.0)
+        self.assertGreater(res["time_to_finish_ms"], 0.0)
+
     async def test_optical_seat_sniping(self):
         browser = MilliScrapeBrowser(mock_mode=True)
         sniper = ReflexSeatSniper(browser=browser, dry_run=True)

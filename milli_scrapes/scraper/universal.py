@@ -10,6 +10,7 @@ Surpasses Firecrawl, Crawl4AI, Spider.cloud, and Bright Data:
 """
 
 import asyncio
+import time
 import re
 from typing import Dict, Any, List, Optional, Union, Callable
 from urllib.parse import urljoin, urlparse
@@ -139,19 +140,55 @@ class UniversalScraper:
         self,
         urls: List[str],
         extract_schema: Optional[Dict[str, str]] = None,
-        concurrency: int = 5
+        concurrency: int = 25,
+        polite_interval_per_domain: float = 0.05,
+        max_retries: int = 2,
+        extract_contacts: bool = True
     ) -> List[Dict[str, Any]]:
         """
         Scrapes a collection of URLs concurrently.
+        Implements high-throughput cross-domain concurrency while enforcing adaptive,
+        polite per-domain rate limiting to prevent 429 throttling and IP blocks.
         """
+        domain_last_time: Dict[str, float] = {}
+        domain_locks: Dict[str, asyncio.Lock] = {}
         semaphore = asyncio.Semaphore(concurrency)
 
         async def _worker(target_url: str):
+            domain = urlparse(target_url).netloc.lower()
+            if domain not in domain_locks:
+                domain_locks[domain] = asyncio.Lock()
+
             async with semaphore:
-                try:
-                    return await self.scrape_url(target_url, extract_schema=extract_schema)
-                except Exception as e:
-                    return {"url": target_url, "error": str(e), "status": 500}
+                retries = 0
+                while True:
+                    if polite_interval_per_domain > 0:
+                        async with domain_locks[domain]:
+                            last_t = domain_last_time.get(domain, 0.0)
+                            now = time.perf_counter()
+                            elapsed = now - last_t
+                            if elapsed < polite_interval_per_domain:
+                                await asyncio.sleep(polite_interval_per_domain - elapsed)
+                            domain_last_time[domain] = time.perf_counter()
+
+                    try:
+                        res = await self.scrape_url(
+                            target_url,
+                            extract_schema=extract_schema,
+                            extract_contacts=extract_contacts
+                        )
+                        if res.get("status") == 429 and retries < max_retries:
+                            retries += 1
+                            domain_last_time[domain] = time.perf_counter() + (0.5 * retries)
+                            await asyncio.sleep(0.5 * retries)
+                            continue
+                        return res
+                    except Exception as e:
+                        if retries < max_retries:
+                            retries += 1
+                            await asyncio.sleep(0.2)
+                            continue
+                        return {"url": target_url, "error": str(e), "status": 500}
 
         tasks = [_worker(u) for u in urls]
         return await asyncio.gather(*tasks)
@@ -214,21 +251,69 @@ class UniversalScraper:
 
         return await self.scrape_batch(queue_urls, concurrency=concurrency)
 
-    def _extract_contacts(self, html: str) -> Dict[str, List[str]]:
-        """Extracts valid emails and phone numbers from HTML."""
-        email_pattern = r'[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+'
-        emails = list(set(re.findall(email_pattern, html)))
+    _RE_EMAIL = re.compile(r'[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+')
+    _RE_PHONE = re.compile(r'(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})')
+    _IMAGE_EXTS = (".png", ".jpg", ".jpeg", ".svg", ".gif", ".webp")
+
+    _RE_INSTAGRAM = re.compile(r'https?://(?:www\.)?instagram\.com/([a-zA-Z0-9_.-]+)/?', re.IGNORECASE)
+    _RE_FACEBOOK = re.compile(r'https?://(?:www\.)?facebook\.com/([a-zA-Z0-9_.-]+)/?', re.IGNORECASE)
+    _RE_TWITTER = re.compile(r'https?://(?:www\.)?(?:twitter|x)\.com/([a-zA-Z0-9_.-]+)/?', re.IGNORECASE)
+    _RE_LINKEDIN = re.compile(r'https?://(?:www\.)?linkedin\.com/(?:company|in)/([a-zA-Z0-9_.-]+)/?', re.IGNORECASE)
+    _RE_TIKTOK = re.compile(r'https?://(?:www\.)?tiktok\.com/@([a-zA-Z0-9_.-]+)/?', re.IGNORECASE)
+    _RE_YOUTUBE = re.compile(r'https?://(?:www\.)?youtube\.com/(?:@|c/|user/)?([a-zA-Z0-9_.-]+)/?', re.IGNORECASE)
+
+    _SOCIAL_DISCARD = {
+        "sharer", "share", "intent", "p", "explore", "reels", "stories",
+        "tags", "pages", "home", "privacy", "terms", "policies", "support",
+        "help", "login", "signup", "settings", "notifications"
+    }
+
+    def _extract_contacts(self, html: str) -> Dict[str, Any]:
+        """Extracts valid emails, social media handles, and phone numbers from HTML."""
+        emails = list(set(self._RE_EMAIL.findall(html)))
         clean_emails = [
             e for e in emails
-            if not any(e.lower().endswith(ext) for ext in [".png", ".jpg", ".jpeg", ".svg", ".gif", ".webp"])
+            if not any(e.lower().endswith(ext) for ext in self._IMAGE_EXTS)
         ]
 
-        phone_pattern = r'(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})'
-        phone_matches = re.findall(phone_pattern, html)
+        phone_matches = self._RE_PHONE.findall(html)
         phones = list(set(["-".join(filter(None, p)) for p in phone_matches if len(p) >= 3]))
+
+        social_media: Dict[str, str] = {}
+
+        # Instagram
+        ig_matches = [m.rstrip('/') for m in self._RE_INSTAGRAM.findall(html) if m.lower() not in self._SOCIAL_DISCARD]
+        if ig_matches:
+            social_media["instagram"] = f"https://instagram.com/{ig_matches[0]}"
+
+        # Facebook
+        fb_matches = [m.rstrip('/') for m in self._RE_FACEBOOK.findall(html) if m.lower() not in self._SOCIAL_DISCARD]
+        if fb_matches:
+            social_media["facebook"] = f"https://facebook.com/{fb_matches[0]}"
+
+        # Twitter / X
+        tw_matches = [m.rstrip('/') for m in self._RE_TWITTER.findall(html) if m.lower() not in self._SOCIAL_DISCARD]
+        if tw_matches:
+            social_media["twitter_x"] = f"https://x.com/{tw_matches[0]}"
+
+        # LinkedIn
+        li_matches = [m.rstrip('/') for m in self._RE_LINKEDIN.findall(html) if m.lower() not in self._SOCIAL_DISCARD]
+        if li_matches:
+            social_media["linkedin"] = f"https://linkedin.com/company/{li_matches[0]}"
+
+        # TikTok
+        tt_matches = [m.rstrip('/') for m in self._RE_TIKTOK.findall(html) if m.lower() not in self._SOCIAL_DISCARD]
+        if tt_matches:
+            social_media["tiktok"] = f"https://tiktok.com/@{tt_matches[0]}"
+
+        # YouTube
+        yt_matches = [m.rstrip('/') for m in self._RE_YOUTUBE.findall(html) if m.lower() not in self._SOCIAL_DISCARD]
+        if yt_matches:
+            social_media["youtube"] = f"https://youtube.com/@{yt_matches[0]}"
 
         return {
             "emails": clean_emails,
+            "social_media": social_media,
             "phones": phones
         }
 
