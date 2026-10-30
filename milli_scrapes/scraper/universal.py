@@ -29,6 +29,7 @@ from ..crawler.sitemap import SitemapCrawler
 from ..crawler.mapper import MilliMapper
 from ..crawler.deep_crawler import MilliCrawler
 from ..decision.engine import MilliDecisionEngine
+from ..extractor.lead_verifier import MilliLeadVerifier
 
 
 class UniversalScraper:
@@ -100,7 +101,7 @@ class UniversalScraper:
         # 4. Automatic Contact Discovery (Emails, Phones)
         contacts = {}
         if extract_contacts:
-            contacts = self._extract_contacts(html)
+            contacts = self._extract_contacts(html, url=url)
 
         # 5. Custom Schema Extraction (if user supplied CSS rules)
         custom_data = {}
@@ -269,8 +270,8 @@ class UniversalScraper:
         "help", "login", "signup", "settings", "notifications"
     }
 
-    def _extract_contacts(self, html: str) -> Dict[str, Any]:
-        """Extracts valid emails, social media handles, and phone numbers from HTML."""
+    def _extract_contacts(self, html: str, url: str = "") -> Dict[str, Any]:
+        """Extracts valid emails, social media handles, and phone numbers from HTML using MilliLeadVerifier cascade."""
         emails = list(set(self._RE_EMAIL.findall(html)))
         clean_emails = [
             e for e in emails
@@ -312,11 +313,20 @@ class UniversalScraper:
         if yt_matches:
             social_media["youtube"] = f"https://youtube.com/@{yt_matches[0]}"
 
-        return {
+        base_contacts = {
             "emails": clean_emails,
             "social_media": social_media,
             "phones": phones
         }
+
+        # Multi-Tier Ground-Truth Enrichment (Cloudflare XOR, Schema.org JSON-LD, meta tags, DMARC OSINT)
+        domain = urlparse(url).netloc if url else ""
+        return MilliLeadVerifier.enrich_contacts(
+            html_text=html,
+            domain=domain,
+            existing_contacts=base_contacts,
+            enable_dns_osint=bool(domain)
+        )
 
     def _extract_by_schema(self, html: str, schema: Dict[str, str]) -> Dict[str, Any]:
         """Extracts targeted fields using BeautifulSoup CSS selectors."""
