@@ -4,7 +4,7 @@
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Abdullah-Al-Raju/milli-scrapes/blob/main/notebooks/milli_scrapes_colab_eval.ipynb)
 [![Python Version](https://img.shields.io/badge/Python-3.10%2B-brightgreen.svg)](https://python.org)
 [![MCP Ready](https://img.shields.io/badge/MCP-Compatible-purple.svg)](SKILL.md)
-[![Tests](https://img.shields.io/badge/Tests-54%2F54_Passed-success.svg)](tests/)
+[![Tests](https://img.shields.io/badge/Tests-61%2F61_Passed-success.svg)](tests/)
 [![Memory Footprint](https://img.shields.io/badge/RAM_Footprint-~65_MB-orange.svg)](#2-competitive-matrix)
 [![10k Leads Benchmark](https://img.shields.io/badge/10k_Leads-17.82s_(561_leads%2Fsec)-brightgreen.svg)](BENCHMARK_10000_LEADS_REPORT.md)
 
@@ -27,7 +27,7 @@ Conventional scrapers (Crawl4AI, Firecrawl, Spider.cloud, Bright Data) suffer fr
 - **Dual-Path Hybrid Router**: Fast-Path async HTTP (~15-30ms) for static pages, seamlessly escalating to the in-loop bionic browser for dynamic SPAs and bot-guarded targets.
 - **Sub-Millisecond V8 Hyper-Reflex Hooks**: Injects zero-clamp `MessageChannel` + `MutationObserver` directly into V8 to strike and dismiss cookie consent and popups in **< 1.0 ms**.
 - **Domain-Aware Adaptive Polite Pacer**: High-concurrency cross-domain scraping (50–100 workers) with automatic per-host rate limiting and 429 exponential backoff so real websites never get conflicted or blocked.
-- **Automated Social Media & Contact Extractor**: Discovers verified executive emails and deep social profiles (Instagram, Facebook, X/Twitter, LinkedIn, TikTok, YouTube).
+- **5-Tier Ground-Truth Verifier (`MilliLeadVerifier`)**: Decodes Cloudflare XOR obfuscated emails (`cdn-cgi/email-protection`), mines Schema.org JSON-LD `sameAs` entity graphs for brand social handles (Instagram, Facebook, X/Twitter, LinkedIn, TikTok, YouTube), traverses contact subpages (`/contact`, `/about`), and validates DNS MX/DMARC routing with zero synthetic guessing.
 - **In-Loop WebSocket CDP**: Direct JSON-RPC connection inside the browser run-loop (< 0.05 ms dispatch latency).
 - **Turnstile & Challenge Auto-Sniper**: Detects Cloudflare Turnstile and challenge interstitials, computes interactive coordinates on the canvas, and executes in-loop coordinate dispatch without third-party solver APIs.
 - **Anti-Bot Stealth Engine**: Canvas and audio fingerprint micro-jitter, WebGL vendor/renderer spoofing, and prototype-level `navigator.webdriver` elimination.
@@ -206,6 +206,22 @@ async def extract_product():
         extract_schema={"name": "h1.prod-title", "price": ".price-tag"}
     )
     print(result["pydantic"])
+```
+
+### 5-Tier Ground-Truth Lead & Contact Verification
+```python
+from milli_scrapes.extractor.lead_verifier import MilliLeadVerifier
+
+async def verify_domain_leads():
+    verifier = MilliLeadVerifier()
+    # Decodes Cloudflare XOR protection, parses Schema.org sameAs, checks DNS MX
+    verified_data = await verifier.verify_domain_contacts(
+        domain="example-restaurant.com",
+        raw_html="<html>...</html>",
+        initial_contacts={"emails": [], "social_media": {}}
+    )
+    print("Verified Emails:", verified_data["emails"])
+    print("Socials (Insta, FB, etc.):", verified_data["social_media"])
 ```
 
 ---
