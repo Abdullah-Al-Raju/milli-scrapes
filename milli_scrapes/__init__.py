@@ -15,6 +15,7 @@ from .browser.proxy import ProxyPoolManager
 from .browser.stealth import StealthManager
 from .optical.scroll_differ import OpticalScrollSettler
 from .decision import MilliDecisionEngine, Noul, Choice, Score
+from .extractor.visual import MilliVisualVerifier, VisualCategory
 
 __all__ = [
     "UniversalScraper",
@@ -25,6 +26,8 @@ __all__ = [
     "StealthManager",
     "OpticalScrollSettler",
     "MilliDecisionEngine",
+    "MilliVisualVerifier",
+    "VisualCategory",
     "Noul",
     "Choice",
     "Score",

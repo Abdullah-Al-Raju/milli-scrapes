@@ -1,9 +1,10 @@
 # Milli-Scrapes: Ultra-Fast Visual Web Scraper, Crawler, and Anti-Bot Stealth Engine for AI Agents
 
 [![License](https://img.shields.io/badge/License-Milli_Dual_License_(Research_Free_%7C_Commercial_Paid)-blue.svg)](LICENSE)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Abdullah-Al-Raju/milli-scrapes/blob/main/notebooks/milli_scrapes_colab_eval.ipynb)
 [![Python Version](https://img.shields.io/badge/Python-3.10%2B-brightgreen.svg)](https://python.org)
 [![MCP Ready](https://img.shields.io/badge/MCP-Compatible-purple.svg)](SKILL.md)
-[![Tests](https://img.shields.io/badge/Tests-49%2F49_Passed-success.svg)](tests/)
+[![Tests](https://img.shields.io/badge/Tests-54%2F54_Passed-success.svg)](tests/)
 [![Memory Footprint](https://img.shields.io/badge/RAM_Footprint-~65_MB-orange.svg)](#2-competitive-matrix)
 [![10k Leads Benchmark](https://img.shields.io/badge/10k_Leads-17.82s_(561_leads%2Fsec)-brightgreen.svg)](BENCHMARK_10000_LEADS_REPORT.md)
 
@@ -216,11 +217,23 @@ Milli-Scrapes is designed as a first-class tool for autonomous AI agents, multi-
 - **Model Context Protocol (MCP)**: Run `python3 -m milli_scrapes.mcp_server` to connect with Cursor, Claude Desktop, and LangChain.
 - **Agent Skill Directives**: See [`SKILL.md`](SKILL.md) for tool call schemas and integration instructions.
 - **Machine-Readable API Contract**: See [`llms.txt`](llms.txt) for token-efficient prompt context and architecture metrics.
-- **Autonomous Subagent Protocols**: See [`AGENTS.md`](AGENTS.md) for autonomous execution criteria.
+- **Autonomous Subagent Protocols**: See [`AGENTS.md`](AGENTS.md) for autonomous execution criteria, ephemeral scratch runner patterns, and visual grounding directives.
 
 ---
 
-## 7. Licensing and Commercial Rights
+## 7. Cloud-Scale Evaluation with Google Colab
+
+For resource-intensive workloads, massive image dataset extraction (2,000+ files), and memory-heavy browser gauntlets, run Milli-Scrapes directly on Google Cloud infrastructure:
+
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Abdullah-Al-Raju/milli-scrapes/blob/main/notebooks/milli_scrapes_colab_eval.ipynb)
+
+- **Hardware Protection:** Offloads multi-gigabyte network bandwidth, RAM spikes, and Chromium processes to Google's cloud instances, keeping your local machine cool and unburdened.
+- **Visual Grounding by Default:** Integrates `MilliVisualVerifier` to filter out non-target objects, food items (e.g. cakes/biscuits), and placeholder graphics in real time.
+- **Auto-Zipping & Local Extraction:** Automatically compresses verified datasets and benchmark reports into `milli_scrapes_results.zip`, downloads directly to your browser, and auto-extracts to your local `output/` directory.
+
+---
+
+## 8. Licensing and Commercial Rights
 
 Milli-Scrapes is published under the **Milli Source-Available Dual License (Commercial & Research)**. See the full legal agreement in [`LICENSE`](LICENSE).
 
@@ -231,7 +244,7 @@ Milli-Scrapes is published under the **Milli Source-Available Dual License (Comm
 
 ---
 
-## 8. Research Inquiries and Contact
+## 9. Research Inquiries and Contact
 
 Milli-Scrapes was architected and developed by **Abdullah-Al-Raju**.
 

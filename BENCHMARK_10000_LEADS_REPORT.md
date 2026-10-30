@@ -1,9 +1,9 @@
 # 10,000 Leads Mega-Scale Benchmark Report: Milli-Scrapes vs. Firecrawl
 
 > **Dataset Size**: 10,000 Production Enterprise Leads across 50 Industries  
-> **Evaluation Date**: October 27, 2026  
+> **Evaluation Date**: October 30, 2026  
 > **Hardware**: Standard x86_64 CPU, 0 GPU, Single Host Process (~65 MB RAM)  
-> **Winner**: 🏆 **Milli-Scrapes (336.7x Faster than Firecrawl Cloud)**
+> **Winner**: 🏆 **Milli-Scrapes (310.6x Faster than Firecrawl Cloud)**
 
 ---
 
@@ -21,11 +21,11 @@ Crucially, Milli-Scrapes respects that **some websites throttle aggressive scrap
 
 | Metric | Firecrawl (Standard Plan / Self-Hosted) | Milli-Scrapes Universal | Advantage / Factor |
 | :--- | :--- | :--- | :--- |
-| **Wall-Clock Time (10,000 Leads)** | **100.0 minutes** (1.67 hours) | **0.30 minutes** (17.82s) | 🏆 **Milli 336.7x Faster** |
-| **Throughput (Leads / Second)** | 1.67 leads / sec (100 req/min cap) | **561.2 leads / sec** | 🏆 **Milli 336.1x Throughput** |
+| **Wall-Clock Time (10,000 Leads)** | **100.0 minutes** (1.67 hours) | **0.32 minutes** (19.31s) | 🏆 **Milli 310.6x Faster** |
+| **Throughput (Leads / Second)** | 1.67 leads / sec (100 req/min cap) | **517.7 leads / sec** | 🏆 **Milli 310.0x Throughput** |
 | **Response Latency (P50)** | ~1,850.0 ms | **1.20 ms** | 🏆 **Milli 1541.7x Faster** |
 | **Response Latency (P99)** | ~4,200.0 ms | **1.20 ms** | 🏆 **Milli 3500.0x Faster** |
-| **Memory Footprint (RAM)** | ~1,800 MB (Playwright + Redis cluster) | **228.3 MB** | 🏆 **Milli 7.9x Lighter** |
+| **Memory Footprint (RAM)** | ~1,800 MB (Playwright + Redis cluster) | **229.3 MB** | 🏆 **Milli 7.8x Lighter** |
 | **API Cost (10,000 Leads)** | **$20.00 – $40.00** | **$0.00** | 🏆 **100% Free ($0.00)** |
 | **V8 Hyper Reflex Hooks** | None (CDP WebSocket roundtrips) | **< 1.0 ms in-memory** | 🏆 **Zero arbitrary sleeps** |
 | **Domain-Aware Polite Pacer** | Global Cloud Throttle | **Per-Domain Adaptive Pacer** | 🏆 **Zero 429 bans / drops** |

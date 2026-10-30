@@ -1,9 +1,9 @@
 {
   "benchmark": "10000_leads_scale_showdown",
-  "timestamp": "2026-10-27T09:23:54Z",
+  "timestamp": "2026-10-30T13:59:06Z",
   "total_leads": 10000,
-  "total_wall_clock_seconds": 17.818,
-  "throughput_leads_per_second": 561.24,
+  "total_wall_clock_seconds": 19.314,
+  "throughput_leads_per_second": 517.75,
   "latency_percentiles_ms": {
     "min": 1.2,
     "p50": 1.2,
@@ -13,7 +13,7 @@
     "max": 1.2,
     "mean": 1.2
   },
-  "memory_rss_mb": 228.3,
+  "memory_rss_mb": 229.3,
   "data_quality": {
     "emails_extracted": 5200,
     "phones_extracted": 10000,
@@ -26,8 +26,8 @@
     "firecrawl_latency_p50_ms": 1850.0,
     "firecrawl_ram_mb": 1800.0,
     "firecrawl_cost_usd": 20.0,
-    "speedup_vs_cloud_rate": "336.7x",
-    "speedup_vs_self_hosted": "103.8x",
-    "ram_savings_ratio": "7.9x"
+    "speedup_vs_cloud_rate": "310.6x",
+    "speedup_vs_self_hosted": "95.8x",
+    "ram_savings_ratio": "7.8x"
   }
 }

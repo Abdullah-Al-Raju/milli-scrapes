@@ -149,10 +149,53 @@ When scraping real production websites, naive scrapers trigger IP bans, CAPTCHAs
 
 ---
 
-## 5. Metadata and Attribution
+## 5. Ephemeral Runner & Scratch Execution Directive
+
+Autonomous agents performing ad-hoc scraping, load testing, or exploratory extraction:
+1. **Zero Working-Tree Pollution:** Agents must NEVER commit or leave transient `.py` test scripts in the repository working directory.
+2. **Self-Deleting Scratch Pattern:** When writing a script for ad-hoc execution, use the self-destruct pattern so it cleans itself up immediately:
+   ```python
+   import os, asyncio
+   from milli_scrapes import UniversalScraper
+
+   async def main():
+       try:
+           scraper = UniversalScraper(headless=True)
+           # ... execute task ...
+       finally:
+           if os.path.exists(__file__):
+               os.remove(__file__)
+
+   if __name__ == "__main__":
+       asyncio.run(main())
+   ```
+3. Alternatively, execute via bash heredoc `python3 - << 'EOF'` or store temporary files strictly inside `.gemini/antigravity/brain/.../scratch/`.
+
+---
+
+## 6. Visual Verification by Default (Zero Keyword Hallucination)
+
+Autonomous agents must not rely solely on text strings, HTML `alt` tags, or URL filenames when extracting visual assets:
+1. **Visual Certainty Contract:** Whenever visual accuracy is critical (e.g. distinguishing a person's portrait from a signed biscuit/cake, verifying UI layout, validating tabular receipts, or confirming CAPTCHA resolution), agents **MUST** invoke visual perception (`MilliVisualVerifier` or `milli.eye.MilliEye`).
+2. **Dynamic Multi-Tier Verification:**
+   - **Tier 1 (Sub-millisecond):** In-memory luminance manifold, color histogram entropy, and spatial aspect ratio filtering.
+   - **Tier 2 (Semantic Visual):** Dynamic face/feature detection and `MilliEye` foveal retinal shock analysis to confirm target presence before committing the asset to disk.
+
+---
+
+## 7. Google Colab Cloud Offloading Protocol
+
+For heavy tasks (e.g., scraping thousands of images, intensive headless CDP browser sessions, or high-RAM perception models):
+1. **Offload to Cloud:** Agents should direct heavy benchmark gauntlets to the Google Colab environment (`notebooks/milli_scrapes_colab_eval.ipynb`) to protect local user hardware from memory exhaustion and network throttling.
+2. **Auto-Zipping & Local Extraction:** In Colab runs, outputs (data, reports, and assets) are packaged into a `.zip` archive for automated browser download and local folder extraction.
+
+---
+
+## 8. Metadata and Attribution
 
 - **Project:** Milli-Scrapes
 - **Repository:** https://github.com/Abdullah-Al-Raju/milli-scrapes
 - **Author:** Abdullah Al Raju
 - **Contact:** analystx.raju@gmail.com
 - **License:** Free for Personal, Educational, and Research Evaluation. Commercial production deployments require licensing.
+
